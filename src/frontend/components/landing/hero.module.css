@@ -1,33 +1,48 @@
-/* Styles for the landing hero; stacked on small screens, image-backed overlay on large ones. */
+/* Styles for the landing hero; text overlays the image at every size, scaled down on phones. */
 .hero {
   position: relative;
   display: flex;
-  flex-direction: column-reverse;
+  align-items: center;
+  min-height: 400px;
   margin: 0;
   overflow: hidden;
   background: var(--color-hero-bg);
 }
 
 .media {
-  position: relative;
-  aspect-ratio: 16 / 11;
+  position: absolute;
+  inset: 0;
+}
+
+/* Fades the image into the hero colour behind the text so copy stays readable on narrow screens. */
+.media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    var(--color-hero-bg) 0%,
+    color-mix(in srgb, var(--color-hero-bg) 75%, transparent) 45%,
+    transparent 70%
+  );
 }
 
 .image {
   object-fit: cover;
-  object-position: 80% 30%;
+  object-position: 88% center;
 }
 
 .slogan {
   position: absolute;
+  display: none;
   right: 6%;
   bottom: 8%;
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 0;
   font-family: var(--font-script), cursive;
-  font-size: clamp(1.5rem, 6.5vw, 3.2rem);
+  z-index: 1;
+  font-size: clamp(1rem, 5vw, 3.2rem);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: 0.06em;
@@ -47,13 +62,14 @@
 
 .content {
   position: relative;
-  z-index: 1;
-  padding: 28px 20px 32px;
+  z-index: 2;
+  max-width: 62%;
+  padding: 24px 16px;
 }
 
 .eyebrow {
-  margin: 0 0 12px;
-  font-size: clamp(0.8rem, 3.4vw, 1.1rem);
+  margin: 0 0 8px;
+  font-size: clamp(0.6rem, 2.6vw, 1.1rem);
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -63,9 +79,9 @@
 .headline {
   display: flex;
   flex-direction: column;
-  margin: 0 0 20px;
+  margin: 0 0 10px;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(1.55rem, 8.2vw, 3.4rem);
+  font-size: clamp(1.05rem, 5.4vw, 3.4rem);
   font-weight: 900;
   line-height: 1.25;
   letter-spacing: 0.04em;
@@ -73,8 +89,8 @@
 }
 
 .tagline {
-  margin: 0 0 12px;
-  font-size: clamp(0.95rem, 4vw, 1.2rem);
+  margin: 0 0 8px;
+  font-size: clamp(0.7rem, 3vw, 1.2rem);
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--color-ink);
@@ -82,9 +98,9 @@
 
 .description {
   max-width: 36rem;
-  margin: 0 0 24px;
-  font-size: clamp(0.92rem, 3.8vw, 1.15rem);
-  line-height: 1.55;
+  margin: 0 0 14px;
+  font-size: clamp(0.68rem, 2.9vw, 1.15rem);
+  line-height: 1.45;
   letter-spacing: 0.02em;
   color: var(--color-text);
 }
@@ -92,7 +108,8 @@
 .actions {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 8px;
+  justify-items: start;
 }
 
 .primary,
@@ -100,11 +117,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  min-height: 52px;
-  padding: 0 28px;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
   border-radius: 6px;
-  font-size: 1.05rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-decoration: none;
@@ -139,16 +156,24 @@
 }
 
 @media (min-width: 640px) {
+  .slogan {
+    display: flex;
+  }
+
   .hero {
     margin: 0 clamp(8px, 1.2vw, 20px);
   }
 
+  .hero {
+    min-height: 440px;
+  }
+
   .content {
-    padding: 44px 32px 48px;
+    padding: 40px 32px;
   }
 
   .headline {
-    font-size: clamp(2.4rem, 6.4vw, 4rem);
+    font-size: clamp(1.8rem, 5vw, 4rem);
     letter-spacing: 0.08em;
   }
 
@@ -156,24 +181,21 @@
     letter-spacing: 0.04em;
   }
 
-  .media {
-    aspect-ratio: 16 / 9;
+  .primary,
+  .secondary {
+    min-height: 46px;
+    padding: 0 24px;
+    font-size: 0.95rem;
   }
 }
 
 @media (min-width: 1024px) {
   .hero {
-    display: flex;
     flex: 1 1 auto;
-    flex-direction: row;
-    align-items: center;
-    min-height: 440px;
   }
 
-  .media {
-    position: absolute;
-    inset: 0;
-    aspect-ratio: auto;
+  .media::after {
+    display: none;
   }
 
   .image {
@@ -221,5 +243,6 @@
   .secondary {
     min-height: clamp(44px, 6vh, 56px);
     padding: 0 36px;
+    font-size: 1.05rem;
   }
 }

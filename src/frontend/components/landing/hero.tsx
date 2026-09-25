@@ -44,7 +44,7 @@ export function Hero({ copy, image }: HeroProps) {
             {copy.primaryCta.label}
           </Link>
           <a href={copy.secondaryCta.href} className={styles.secondary}>
-            <CirclePlay aria-hidden size={22} strokeWidth={2} />
+            <CirclePlay aria-hidden size={18} strokeWidth={2} />
             {copy.secondaryCta.label}
           </a>
         </div>
