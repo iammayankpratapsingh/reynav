@@ -1,0 +1,121 @@
+/* Styles for the landing header and its mobile menu. */
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 64px;
+  padding: 0 clamp(16px, 2.5vw, 36px);
+  background: var(--color-surface);
+}
+
+.brand {
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: clamp(20px, 2.6vw, 44px);
+}
+
+.navLink {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.navLink:hover {
+  color: var(--color-ink);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 6px;
+  background: var(--color-brand);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.cta:hover {
+  background: var(--color-brand-strong);
+}
+
+.mobile {
+  display: flex;
+}
+
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.mobilePanel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px 20px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.08);
+}
+
+.mobileLink {
+  padding: 12px 4px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.mobilePanel .cta {
+  margin-top: 8px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (min-width: 960px) {
+  .header {
+    height: var(--header-height);
+  }
+
+  .nav {
+    display: flex;
+  }
+
+  .mobile {
+    display: none;
+  }
+}

@@ -1,0 +1,160 @@
+/* Styles for the bookings screen. */
+.page {
+  display: grid;
+  gap: 16px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.period {
+  margin: 0;
+  padding: 9px 16px;
+  border: 1px solid #dcdfe6;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #4f5462;
+  white-space: nowrap;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.add {
+  padding: 8px 15px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #4f5462;
+  cursor: pointer;
+}
+
+.add:hover {
+  border-color: #b9bec9;
+  color: var(--color-ink);
+}
+
+.integrations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.integration {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 6px 12px;
+  align-items: center;
+  padding: 13px 14px;
+  border: 1px solid #e4e6ec;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.integration[data-active="true"] {
+  border-color: rgba(47, 158, 95, 0.45);
+  background: #f6fbf8;
+}
+
+.integrationName {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.connected,
+.connect {
+  grid-column: 2;
+  justify-self: start;
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.connected {
+  background: #e7f5ec;
+  color: #1f6b3d;
+}
+
+.connect {
+  border: 1px solid #dcdfe6;
+  background: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #4f5462;
+  cursor: pointer;
+}
+
+.connect:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand-strong);
+}
+
+.add:focus-visible,
+.connect:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.note {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #8a8f9c;
+}
+
+.page > .note {
+  margin: 0;
+}
+
+@media (min-width: 720px) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .integrations {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.revenueRow {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(80px, 1.2fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid #eceef2;
+}
+
+.revenueRow:first-child {
+  border-top: 0;
+}
+
+.revenueName {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.revenueValue {
+  text-align: right;
+  color: var(--color-ink);
+}
+
+.subheading {
+  margin: 18px 0 4px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}

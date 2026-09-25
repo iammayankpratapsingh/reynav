@@ -1,0 +1,228 @@
+/* Styles for the headline Growth Score card. */
+.card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px 20px;
+  padding: 20px 22px;
+  overflow: hidden;
+  border: 1px solid #e4e6ec;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+/*
+ * A chessboard in the top-right corner: soft brand-tinted squares under fine grid lines, fading out toward
+ * the middle so it decorates the empty corner without competing with the score. Purely decorative.
+ */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  width: min(420px, 70%);
+  height: 100%;
+  --square: 22px;
+  background:
+    linear-gradient(rgba(212, 85, 122, 0.14) 1px, transparent 1px) 0 0 / var(--square) var(--square),
+    linear-gradient(90deg, rgba(212, 85, 122, 0.14) 1px, transparent 1px) 0 0 / var(--square) var(--square),
+    conic-gradient(rgba(212, 85, 122, 0.075) 25%, transparent 0 50%, rgba(212, 85, 122, 0.075) 0 75%, transparent 0)
+      0 0 / calc(var(--square) * 2) calc(var(--square) * 2);
+  -webkit-mask-image: radial-gradient(120% 110% at 100% 0%, #000 0%, rgba(0, 0, 0, 0.55) 35%, transparent 72%);
+  mask-image: radial-gradient(120% 110% at 100% 0%, #000 0%, rgba(0, 0, 0, 0.55) 35%, transparent 72%);
+  pointer-events: none;
+}
+
+/* A soft glow in the very corner, so the pattern reads as light rather than a grid pasted on. */
+.card::after {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  z-index: -1;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 138, 169, 0.22), transparent 70%);
+  pointer-events: none;
+}
+
+.text {
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
+}
+
+.value {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin: 0;
+}
+
+.number {
+  font-size: clamp(2.6rem, 9vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+  animation: settle 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.outOf {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.delta {
+  text-align: right;
+  align-self: center;
+}
+
+.deltaUp,
+.deltaDown {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  font-size: clamp(1.4rem, 5vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.deltaUp {
+  color: #1f7a45;
+}
+
+.deltaDown {
+  color: #96214a;
+}
+
+.deltaNote,
+.noPrevious {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.noPrevious {
+  max-width: 150px;
+  line-height: 1.35;
+}
+
+.signals {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+.track {
+  grid-column: 1 / -1;
+  height: 12px;
+  border-radius: 999px;
+  background: #d9dce3;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #4a9d68;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fillPending,
+.fillFailed {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.fillPending {
+  background: linear-gradient(90deg, var(--color-brand), #f0a3bd);
+  background-size: 200% 100%;
+  animation: slide 1.6s linear infinite;
+}
+
+.fillFailed {
+  background: #b9bec9;
+}
+
+@keyframes slide {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Pending state */
+.pendingHead {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 6px;
+  font-size: clamp(1.15rem, 4.5vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.pendingHead svg {
+  flex: none;
+  color: var(--color-brand);
+}
+
+.pendingNote {
+  margin: 0;
+  max-width: 460px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.spinner {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner,
+  .fillPending,
+  .number {
+    animation: none;
+  }
+
+  .fill,
+  .fillPending,
+  .fillFailed {
+    transition: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 22px 26px;
+  }
+}

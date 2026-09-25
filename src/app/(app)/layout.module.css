@@ -1,0 +1,21 @@
+/* Authenticated shell layout: fixed sidebar beside a scrolling work area. */
+.shell {
+  min-height: 100svh;
+  background: #f5f6f8;
+}
+
+.main {
+  padding: 20px 16px 48px;
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    display: grid;
+    grid-template-columns: 268px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .main {
+    padding: 36px 40px 64px;
+  }
+}

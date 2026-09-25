@@ -1,0 +1,175 @@
+/* Layout for the sign-in screen: brand panel beside the form on desktop, stacked on mobile. */
+@property --glow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 225deg;
+}
+
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100svh;
+  background: var(--color-bg);
+}
+
+.aside {
+  display: flex;
+  padding: 26px 20px;
+  background:
+    linear-gradient(var(--glow-angle), rgba(240, 138, 169, 0.28), rgba(240, 138, 169, 0.06) 12%, transparent 22%),
+    radial-gradient(520px 320px at 0% 100%, rgba(239, 223, 209, 0.22), transparent 70%),
+    #171a24;
+  color: #ffffff;
+  animation: glowOrbit 16s ease-in-out infinite;
+}
+
+/* Pink light rotates clockwise from corner to corner: top-right → bottom-right → bottom-left → top-left. */
+@keyframes glowOrbit {
+  0% {
+    --glow-angle: 225deg;
+  }
+  25% {
+    --glow-angle: 315deg;
+  }
+  50% {
+    --glow-angle: 405deg;
+  }
+  75% {
+    --glow-angle: 495deg;
+  }
+  100% {
+    --glow-angle: 585deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aside {
+    animation: none;
+  }
+}
+
+.asideInner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.tagline {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.asideBody {
+  display: none;
+}
+
+.asideHeading {
+  margin: 0 0 14px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+.asideText {
+  margin: 0 0 28px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.points {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.point {
+  display: grid;
+  grid-template-columns: 17px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.point svg {
+  margin-top: 2px;
+  color: #f08aa9;
+}
+
+.main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 20px 20px 48px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  justify-self: start;
+  padding: 8px 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--color-ink);
+}
+
+.formSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 12px;
+}
+
+.brand:focus-visible,
+.back:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (min-width: 960px) {
+  .page {
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  }
+
+  .aside {
+    padding: 44px 48px;
+  }
+
+  .asideInner {
+    max-width: 480px;
+    margin: 0;
+  }
+
+  .asideBody {
+    display: block;
+    margin-top: auto;
+    padding-top: 48px;
+  }
+
+  .main {
+    padding: 44px 48px;
+  }
+}

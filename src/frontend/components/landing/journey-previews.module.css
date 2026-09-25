@@ -1,0 +1,437 @@
+/* Styles for the growth journey mini previews; animations start when the panel is reached. */
+.panel {
+  width: 100%;
+  max-width: 440px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 40px -18px rgba(62, 36, 24, 0.28), 0 2px 6px rgba(17, 22, 36, 0.04);
+  overflow: hidden;
+  transition: transform 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
+  opacity: 0.6;
+  transform: translateY(12px) scale(0.98);
+}
+
+.panel[data-reached="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  background: #fbf7f3;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e6d9cc;
+}
+
+.panelTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--color-ink);
+}
+
+.panelBody {
+  padding: 16px;
+}
+
+.note {
+  margin: 0;
+  padding: 0 16px 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: #8a8f9c;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Status rows (connect, scan) */
+.rows {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.rowIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: rgba(212, 85, 122, 0.08);
+  color: var(--color-brand);
+  flex: none;
+}
+
+.rowLabel {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.statusIdle,
+.statusRunning,
+.statusDone {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.statusIdle {
+  background: #f1f2f5;
+  color: #6b7080;
+}
+
+.statusRunning {
+  background: #fff3de;
+  color: #9a5b00;
+}
+
+.statusDone {
+  background: #e3f5ec;
+  color: #1f7a4f;
+}
+
+/* Growth score */
+.score {
+  display: grid;
+  gap: 14px;
+}
+
+.meterTrack {
+  height: 12px;
+  border-radius: 999px;
+  background: #ececef;
+  overflow: hidden;
+}
+
+.meterFill {
+  display: block;
+  width: 72%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4f9a78, #62b48d);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.panel[data-reached="true"] .meterFill {
+  transform: scaleX(1);
+}
+
+.bars {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.barLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+}
+
+.barTrack {
+  height: 8px;
+  border-radius: 999px;
+  background: #f1eee9;
+  overflow: hidden;
+}
+
+.barFill {
+  display: block;
+  width: calc(var(--fill) * 100%);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #e58aa6, var(--color-brand));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay);
+}
+
+.panel[data-reached="true"] .barFill {
+  transform: scaleX(1);
+}
+
+/* Opportunities */
+.opportunities {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.opportunity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  opacity: 0.3;
+  transform: translateX(-10px);
+  transition: opacity 0.5s ease var(--delay), transform 0.5s ease var(--delay);
+}
+
+.panel[data-reached="true"] .opportunity {
+  opacity: 1;
+  transform: none;
+}
+
+.rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f8d7e3;
+  color: #7a1f41;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex: none;
+}
+
+.opportunityText {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.opportunityTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.opportunityNote {
+  font-size: 0.76rem;
+  color: #6b7080;
+}
+
+.impactHigh,
+.impactMedium {
+  flex: none;
+  padding: 4px 9px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.impactHigh {
+  background: #fbe0ea;
+  color: #b3244f;
+}
+
+.impactMedium {
+  background: #fbf1c7;
+  color: #8a6400;
+}
+
+/* Content drafting */
+.content {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip,
+.chipDone {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.chip {
+  background: #f1ecff;
+  color: #5b45c4;
+}
+
+.chipDone {
+  background: #e3f5ec;
+  color: #1f7a4f;
+}
+
+.doc {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  border: 1px dashed #e3d6c8;
+  border-radius: 12px;
+  background: #fffdfb;
+}
+
+.docTitle {
+  width: 45%;
+  height: 10px;
+  border-radius: 6px;
+  background: #d9cfc5;
+}
+
+.docLine {
+  width: var(--w);
+  height: 7px;
+  border-radius: 6px;
+  background: #ece5dd;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s ease var(--delay);
+}
+
+.panel[data-reached="true"] .docLine {
+  transform: scaleX(1);
+}
+
+/* Results chart */
+.results {
+  display: grid;
+  gap: 10px;
+}
+
+.chart {
+  width: 100%;
+  height: auto;
+}
+
+.axis {
+  stroke: #ece5dd;
+  stroke-width: 2;
+}
+
+.lineA,
+.lineB {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lineA {
+  stroke: var(--color-brand);
+}
+
+.lineB {
+  stroke: #4f9a78;
+  transition-delay: 0.25s;
+}
+
+.panel[data-reached="true"] .lineA,
+.panel[data-reached="true"] .lineB {
+  stroke-dashoffset: 0;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swatchA,
+.swatchB {
+  width: 14px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.swatchA {
+  background: var(--color-brand);
+}
+
+.swatchB {
+  background: #4f9a78;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .meterFill,
+  .barFill,
+  .opportunity,
+  .docLine,
+  .lineA,
+  .lineB {
+    transition: none;
+  }
+
+  .spin {
+    animation: none;
+  }
+}

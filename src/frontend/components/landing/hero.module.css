@@ -1,0 +1,225 @@
+/* Styles for the landing hero; stacked on small screens, image-backed overlay on large ones. */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-hero-bg);
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 16 / 11;
+}
+
+.image {
+  object-fit: cover;
+  object-position: 80% 30%;
+}
+
+.slogan {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
+  font-family: var(--font-script), cursive;
+  font-size: clamp(1.5rem, 6.5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  transform: rotate(-7deg);
+  transform-origin: right bottom;
+}
+
+.slogan span:nth-child(2) {
+  margin-left: 0.3em;
+}
+
+.slogan span:nth-child(3) {
+  margin-left: 0.45em;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 28px 20px 32px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: clamp(0.8rem, 3.4vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 20px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.55rem, 8.2vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+}
+
+.tagline {
+  margin: 0 0 12px;
+  font-size: clamp(0.95rem, 4vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+}
+
+.description {
+  max-width: 36rem;
+  margin: 0 0 24px;
+  font-size: clamp(0.92rem, 3.8vw, 1.15rem);
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 28px;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.primary {
+  background: var(--color-brand);
+  color: #ffffff;
+}
+
+.primary:hover {
+  background: var(--color-brand-strong);
+}
+
+.secondary {
+  border: 1.5px solid var(--color-ink-soft);
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.secondary:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+@media (min-width: 480px) {
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+  }
+}
+
+@media (min-width: 640px) {
+  .hero {
+    margin: 0 clamp(8px, 1.2vw, 20px);
+  }
+
+  .content {
+    padding: 44px 32px 48px;
+  }
+
+  .headline {
+    font-size: clamp(2.4rem, 6.4vw, 4rem);
+    letter-spacing: 0.08em;
+  }
+
+  .description {
+    letter-spacing: 0.04em;
+  }
+
+  .media {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    min-height: 440px;
+  }
+
+  .media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+
+  .image {
+    object-position: right center;
+  }
+
+  .slogan {
+    font-size: clamp(2rem, min(3.6vw, 6.5vh), 4.2rem);
+  }
+
+  .content {
+    max-width: 62%;
+    padding: clamp(20px, 3.5vh, 44px) clamp(40px, 3.5vw, 64px);
+  }
+
+  .eyebrow {
+    margin-bottom: clamp(8px, 1.5vh, 16px);
+    font-size: clamp(0.9rem, min(1.3vw, 2.3vh), 1.3rem);
+  }
+
+  .headline {
+    margin-bottom: clamp(12px, 2.5vh, 28px);
+    font-size: clamp(2rem, min(4.8vw, 8vh), 4.8rem);
+    line-height: 1.25;
+    letter-spacing: 0.1em;
+  }
+
+  .tagline {
+    margin-bottom: clamp(8px, 1.6vh, 18px);
+    font-size: clamp(1rem, min(1.4vw, 2.4vh), 1.3rem);
+  }
+
+  .description {
+    margin-bottom: clamp(16px, 3.5vh, 36px);
+    font-size: clamp(0.95rem, min(1.3vw, 2.3vh), 1.25rem);
+    line-height: 1.45;
+    letter-spacing: 0.05em;
+  }
+
+  .actions {
+    gap: 16px;
+  }
+
+  .primary,
+  .secondary {
+    min-height: clamp(44px, 6vh, 56px);
+    padding: 0 36px;
+  }
+}

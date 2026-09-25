@@ -1,0 +1,119 @@
+/* Growth plan: progress and today's task on top, then the four focus weeks. */
+.hero {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid #e4e6ec;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
+  }
+}
+
+.progress {
+  display: grid;
+  gap: 8px;
+}
+
+.progressLabel {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.todayCard {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fdf5f8;
+}
+
+.todayLabel {
+  margin: 0 0 8px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand-strong);
+}
+
+.todayRow {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.todayText {
+  margin: 0 0 3px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.tasks {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 10px 6px;
+  border-top: 1px solid #eceef2;
+  border-radius: 8px;
+}
+
+.task:first-child {
+  border-top: 0;
+}
+
+.task[data-today="true"] {
+  background: #fdf5f8;
+}
+
+.taskText {
+  min-width: 0;
+}
+
+.taskLabel {
+  margin: 0 0 2px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.task[data-done="true"] .taskLabel {
+  color: #8a8f9c;
+  text-decoration: line-through;
+}
+
+.todayBadge {
+  margin-left: 8px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--color-brand);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.error {
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid #f0c2ce;
+  border-radius: 10px;
+  background: #fdf1f4;
+  font-size: 0.9rem;
+  color: #96214a;
+}

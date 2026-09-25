@@ -1,0 +1,136 @@
+/* Styles for the upcoming-library list. */
+.section {
+  padding: 56px 16px;
+  background: #fdf9f6;
+}
+
+.intro {
+  max-width: 720px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.heading {
+  margin: 0 0 10px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.7rem, 6vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.lead {
+  margin: 0;
+  font-size: clamp(0.95rem, 3.4vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 16px;
+  padding: 20px 22px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: var(--color-surface);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.item:hover {
+  border-color: rgba(212, 85, 122, 0.35);
+  box-shadow: 0 10px 26px rgba(17, 22, 36, 0.07);
+}
+
+.number {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.6;
+  color: rgba(212, 85, 122, 0.55);
+}
+
+.kind {
+  margin: 0 0 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: clamp(1.05rem, 4vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+
+.summary {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.readTime {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  grid-column: 2;
+  margin: 12px 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.readTime svg {
+  color: var(--color-brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 72px 24px;
+  }
+
+  .item {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 22px;
+    padding: 24px 28px;
+  }
+
+  .readTime {
+    grid-column: 3;
+    margin: 4px 0 0;
+  }
+}

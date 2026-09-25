@@ -1,0 +1,8 @@
+# Keeps env files, build output and dependencies out of version control.
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.env
+.env.*
+!.env.example

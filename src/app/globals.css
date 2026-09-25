@@ -1,0 +1,75 @@
+/* Global design tokens and base styles. */
+:root {
+  color-scheme: light;
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-ink: #111624;
+  --color-ink-soft: #4a4d57;
+  --color-text: #22252e;
+  --color-muted: #4b4f5c;
+  --color-border: #eceef2;
+  --color-brand: #d4557a;
+  --color-brand-strong: #bd4068;
+  --color-focus: #2563eb;
+  --color-hero-bg: #efdfd1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Chatbase chat widget (public pages). Its window and bubble live outside React, so they are styled here by
+   Chatbase's own ids. !important beats the inline sizes Chatbase sets; phones keep its full-screen layout. */
+@media (min-width: 640px) {
+  #chatbase-bubble-window {
+    width: 360px !important;
+    height: min(520px, calc(100dvh - 120px)) !important;
+  }
+}
+
+/* After the chat is tucked away on scroll, the bubble pulses to show the conversation is still open. */
+.reynav-chat-minimised #chatbase-bubble-button {
+  animation: reynav-chat-pulse 2s ease-out infinite;
+}
+
+@keyframes reynav-chat-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 85, 122, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(212, 85, 122, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 85, 122, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reynav-chat-minimised #chatbase-bubble-button {
+    animation: none;
+    box-shadow: 0 0 0 4px rgba(212, 85, 122, 0.45);
+  }
+}

@@ -1,0 +1,87 @@
+/* Services screen extras: under-marketed cards and the editable economics cells. */
+.cards {
+  display: grid;
+  gap: 14px;
+}
+
+@media (min-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+.card {
+  padding: 16px;
+  border: 1px solid #f3d6b0;
+  border-radius: 12px;
+  background: #fffaf3;
+}
+
+.cardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.cardTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.cardTitle svg {
+  color: #b7791f;
+}
+
+.subhead {
+  margin: 10px 0 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7080;
+}
+
+.bullets,
+.steps {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--color-ink-soft);
+}
+
+.numberInput {
+  width: 92px;
+}
+
+.score {
+  display: grid;
+  gap: 5px;
+  min-width: 90px;
+}
+
+.score strong {
+  font-size: 1rem;
+  color: var(--color-ink);
+}
+
+.saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #1f7a45;
+}
+
+.error {
+  color: #96214a;
+}

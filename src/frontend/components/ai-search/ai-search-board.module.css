@@ -1,0 +1,70 @@
+/* AI Search screen: summary tiles and the mention-rate history. */
+.summary {
+  display: grid;
+  gap: 14px;
+}
+
+@media (min-width: 760px) {
+  .summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.tile {
+  padding: 16px 18px;
+  border: 1px solid #e4e6ec;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.tileLabel {
+  margin: 0 0 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #5c6170;
+}
+
+.tileValue {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.tileValue span {
+  margin-left: 2px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b7080;
+}
+
+.tileNote {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+
+.history {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.historyRow {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr) 44px;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.historyDate {
+  color: var(--color-muted);
+}
+
+.historyRow strong {
+  text-align: right;
+  color: var(--color-ink);
+}

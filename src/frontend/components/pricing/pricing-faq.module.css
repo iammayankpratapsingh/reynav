@@ -1,0 +1,116 @@
+/* Styles for the pricing FAQ disclosure list. */
+.section {
+  padding: 8px 16px 64px;
+  background: #ffffff;
+}
+
+.inner {
+  display: grid;
+  gap: 28px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-surface);
+  transition: border-color 0.2s ease;
+}
+
+.item[open] {
+  border-color: rgba(212, 85, 122, 0.4);
+  background: #fdf9f6;
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  font-size: clamp(1rem, 3.6vw, 1.12rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.question::-webkit-details-marker {
+  display: none;
+}
+
+.icon {
+  flex: none;
+  color: var(--color-brand);
+  transition: transform 0.25s ease;
+}
+
+.item[open] .icon {
+  transform: rotate(45deg);
+}
+
+.answer {
+  margin: 0;
+  padding: 0 20px 20px;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--color-text);
+}
+
+.question:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: -3px;
+  border-radius: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon {
+    transition: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .section {
+    padding: 8px 24px 80px;
+  }
+
+  .inner {
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .intro {
+    position: sticky;
+    top: 32px;
+    align-self: start;
+  }
+}

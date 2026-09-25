@@ -1,0 +1,118 @@
+/* Growth Score history: a single thin line on a recessive grid, with a hover tooltip. */
+.card {
+  padding: 18px 18px 14px;
+  border: 1px solid #e4e6ec;
+  border-radius: 16px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.empty {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--color-muted);
+}
+
+.chart {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.grid {
+  stroke: #eceef2;
+  stroke-width: 1;
+}
+
+.axisLabel {
+  font-size: 11px;
+  fill: #6b7080;
+}
+
+.crosshair {
+  stroke: #c9ccd4;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.line {
+  fill: none;
+  stroke: var(--color-brand);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* A surface-coloured ring keeps each point readable where it sits on the line. */
+.point {
+  fill: var(--color-brand);
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.directLabel {
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--color-ink);
+}
+
+.hit {
+  fill: transparent;
+  cursor: default;
+  outline: none;
+}
+
+.hit:focus-visible {
+  stroke: var(--color-focus);
+  stroke-width: 2;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  gap: 1px;
+  padding: 6px 10px;
+  border: 1px solid #e4e6ec;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(17, 22, 36, 0.12);
+  font-size: 0.78rem;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 12px));
+}
+
+.tooltip strong {
+  font-size: 0.95rem;
+  color: var(--color-ink);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

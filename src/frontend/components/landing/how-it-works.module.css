@@ -1,0 +1,539 @@
+/* Styles for the How it works engine: dark stage, animated connectors, sources, engine and outputs. */
+.section {
+  position: relative;
+  padding: 64px 16px 56px;
+  background: #11141d;
+  color: #ffffff;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.glowA,
+.glowB {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.glowA {
+  top: -120px;
+  left: 50%;
+  width: 640px;
+  height: 420px;
+  background: rgba(212, 85, 122, 0.28);
+  transform: translateX(-50%);
+}
+
+.glowB {
+  bottom: -160px;
+  right: -120px;
+  width: 520px;
+  height: 420px;
+  background: rgba(109, 87, 216, 0.22);
+}
+
+.intro {
+  max-width: 720px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f08aa9;
+}
+
+.heading {
+  margin: 0 0 14px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2rem, 7vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+}
+
+.lead {
+  margin: 0;
+  font-size: clamp(0.98rem, 3.6vw, 1.2rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* Stage: stacked on small screens */
+.stage {
+  position: relative;
+  display: grid;
+  gap: 56px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.wires {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.wireBase,
+.wireFlow {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.wire .wireBase {
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 2;
+}
+
+.wire .wireFlow {
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 2;
+  stroke-dasharray: 2 10;
+  animation: flow 1.6s linear infinite;
+}
+
+.wireLit .wireBase {
+  stroke: url(#wire-active);
+  stroke-width: 3;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 6px rgba(240, 138, 169, 0.6));
+}
+
+.wireLit .wireFlow {
+  stroke: #ffd3e0;
+  stroke-width: 2;
+  stroke-dasharray: 3 12;
+  animation: flow 0.9s linear infinite;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -30;
+  }
+}
+
+.particle {
+  fill: rgba(255, 255, 255, 0.35);
+}
+
+.wireLit .particle {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 4px #f08aa9);
+}
+
+.column {
+  position: relative;
+  z-index: 1;
+}
+
+.columnLabel {
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sources,
+.outputs {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sources {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.outputs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.source,
+.output {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: #171a24;
+  color: rgba(255, 255, 255, 0.85);
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.source {
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.source:hover {
+  border-color: rgba(240, 138, 169, 0.5);
+}
+
+.source[data-active="true"] {
+  border-color: #f08aa9;
+  background: rgba(212, 85, 122, 0.18);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(212, 85, 122, 0.15), 0 10px 30px -10px rgba(212, 85, 122, 0.7);
+  transform: translateY(-2px);
+}
+
+.source:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.sourceIcon,
+.outputIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  flex: none;
+}
+
+.sourceIcon {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffd3e0;
+}
+
+.source[data-active="true"] .sourceIcon {
+  background: var(--color-brand);
+  color: #ffffff;
+}
+
+.output {
+  animation: arrive 1.8s ease-in-out infinite var(--delay);
+}
+
+.outputIcon {
+  background: linear-gradient(135deg, #f08aa9, var(--color-brand));
+  color: #ffffff;
+}
+
+@keyframes arrive {
+  0%,
+  100% {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    border-color: rgba(240, 138, 169, 0.55);
+  }
+}
+
+/* Engine */
+.center {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.engine {
+  --engine-size: 168px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--engine-size);
+  height: var(--engine-size);
+  border-radius: 50%;
+}
+
+.engineCore {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #3a2230 0%, #1b1622 55%, #12121a 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 60px rgba(212, 85, 122, 0.45),
+    0 0 120px rgba(212, 85, 122, 0.25);
+  text-align: center;
+}
+
+.engineName {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  margin-right: -0.26em;
+}
+
+.engineSub {
+  margin-top: 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f08aa9;
+}
+
+.engineRing,
+.engineRingSlow {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px dashed rgba(240, 138, 169, 0.55);
+  animation: spin 18s linear infinite;
+}
+
+.engineRingSlow {
+  inset: -26px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(240, 138, 169, 0.9);
+  animation-duration: 6s;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbit {
+  display: none;
+}
+
+.taskList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.taskList li,
+.orbitChip {
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: #1b1e28;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.caption {
+  max-width: 420px;
+  min-height: 92px;
+  padding: 14px 18px;
+  border: 1px solid rgba(240, 138, 169, 0.35);
+  border-radius: 16px;
+  background: #1f1720;
+  text-align: center;
+}
+
+.captionTitle {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffd3e0;
+}
+
+.captionBody {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hint {
+  margin: -6px 0 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.trust {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 24px;
+  max-width: 1180px;
+  margin: 48px auto 0;
+  padding: 20px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  list-style: none;
+}
+
+.trust li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.trust svg {
+  color: #f08aa9;
+}
+
+/* Tablet: orbit appears around the engine */
+@media (min-width: 640px) {
+  .section {
+    padding: 88px 24px 72px;
+  }
+
+  .intro {
+    margin-bottom: 56px;
+  }
+
+  .stage {
+    gap: 96px;
+  }
+
+  .source,
+  .output {
+    padding: 14px 8px;
+    font-size: 0.8rem;
+  }
+
+  .engine {
+    --engine-size: 200px;
+    margin: 36px 0;
+  }
+
+  .engineName {
+    font-size: 1.6rem;
+  }
+
+  .taskList {
+    display: none;
+  }
+
+  .orbit {
+    --radius: calc(var(--engine-size) / 2 + 62px);
+    position: absolute;
+    inset: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    animation: spin 48s linear infinite;
+  }
+
+  .orbitItem {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: rotate(var(--angle)) translateX(var(--radius)) rotate(calc(-1 * var(--angle)));
+  }
+
+  .orbitChip {
+    display: inline-block;
+    transform: translate(-50%, -50%);
+    animation: counterSpin 48s linear infinite;
+    background: rgba(17, 20, 29, 0.85);
+  }
+
+  @keyframes counterSpin {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(-360deg);
+    }
+  }
+}
+
+/* Desktop: sources left, engine centre, outputs right */
+@media (min-width: 1024px) {
+  .section {
+    padding: 112px 32px 80px;
+  }
+
+  .stage {
+    grid-template-columns: minmax(0, 1fr) 460px minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    min-height: 560px;
+  }
+
+  .sources,
+  .outputs {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .sourcesColumn,
+  .outputsColumn {
+    display: grid;
+  }
+
+  .columnLabel {
+    text-align: left;
+  }
+
+  .source,
+  .output {
+    flex-direction: row;
+    gap: 12px;
+    max-width: 260px;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+    text-align: left;
+  }
+
+  .outputs {
+    justify-items: end;
+  }
+
+  .outputs .output {
+    width: 100%;
+  }
+
+  .outputsColumn .columnLabel {
+    text-align: right;
+  }
+
+  .outputsColumn {
+    justify-items: end;
+  }
+
+  .engine {
+    --engine-size: 220px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wire .wireFlow,
+  .wireLit .wireFlow,
+  .engineRing,
+  .engineRingSlow,
+  .output,
+  .orbit,
+  .orbitChip {
+    animation: none;
+  }
+}

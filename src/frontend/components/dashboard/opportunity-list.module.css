@@ -1,0 +1,212 @@
+/* Styles for the ranked opportunity list. */
+.section {
+  padding-top: 4px;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 6px;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(1.25rem, 5vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.viewAll {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-brand);
+  text-decoration: none;
+}
+
+.viewAll:hover,
+.title:hover {
+  text-decoration: underline;
+}
+
+.viewAll:focus-visible,
+.title:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 8px 14px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.list li:last-child {
+  border-bottom: 0;
+}
+
+.rank,
+.rankPending {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #171a24;
+}
+
+.rank[data-impact="high"] {
+  background: #fbdceb;
+}
+
+.rank[data-impact="medium"],
+.rank[data-impact="low"] {
+  background: #e2e4e9;
+}
+
+.rankPending {
+  background: #eef0f3;
+  color: #9aa0ad;
+}
+
+.body {
+  min-width: 0;
+}
+
+.title {
+  display: block;
+  margin: 0 0 3px;
+  text-decoration: none;
+  font-size: clamp(1.05rem, 4vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+
+.note {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: #5c6170;
+}
+
+.estimate {
+  margin: 5px 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-brand-strong);
+}
+
+.impact {
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.impact[data-impact="high"] {
+  background: #fbdceb;
+  color: #96214a;
+}
+
+.impact[data-impact="medium"] {
+  background: #fbf0c4;
+  color: #7a5a10;
+}
+
+.impact[data-impact="low"] {
+  background: #e9ebef;
+  color: #4f5462;
+}
+
+/* Waiting state */
+.pendingHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 3px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.pendingHead svg {
+  color: var(--color-brand);
+}
+
+.pendingNote {
+  margin: 0 0 6px;
+  font-size: 0.86rem;
+  color: var(--color-muted);
+}
+
+.bar {
+  display: block;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #eef0f3 25%, #f8f9fb 50%, #eef0f3 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+.barTitle {
+  width: min(58%, 260px);
+  height: 17px;
+  margin-bottom: 8px;
+}
+
+.barNote {
+  width: min(42%, 190px);
+  height: 12px;
+}
+
+.barBadge {
+  width: 96px;
+  height: 32px;
+  border-radius: 999px;
+}
+
+.spinner {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.empty {
+  margin: 12px 0 0;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .spinner {
+    animation: none;
+  }
+}

@@ -1,0 +1,282 @@
+/* Cookie banner (pinned to the bottom of the viewport) and the settings dialog. */
+/* The banner is dark so it reads as a notice on top of the white page, not as part of it. */
+.banner {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  z-index: 50;
+  display: grid;
+  gap: 16px;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 18px 20px;
+  border: 1px solid #2a2f40;
+  border-left: 4px solid var(--color-brand);
+  border-radius: 16px;
+  background: var(--color-ink);
+  box-shadow: 0 16px 44px rgba(17, 22, 36, 0.35);
+  animation: banner-in 0.35s ease-out;
+}
+
+@keyframes banner-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.bannerHeading {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.bannerBody {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #c9ccd6;
+}
+
+/* Secondary and text buttons flipped for the dark banner; the dialog keeps the light versions. */
+.banner .secondary {
+  border-color: #ffffff;
+  background: transparent;
+  color: #ffffff;
+}
+
+.banner .secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.banner .textButton {
+  color: #f5b3c6;
+}
+
+.banner .primary:focus-visible,
+.banner .secondary:focus-visible,
+.banner .textButton:focus-visible {
+  outline-color: #93b4ff;
+}
+
+.bannerActions,
+.dialogActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Accept and Reject share size and weight so neither is the easier click. */
+.primary,
+.secondary {
+  flex: 1 1 auto;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.primary {
+  border: 1.5px solid var(--color-brand);
+  background: var(--color-brand);
+  color: #ffffff;
+}
+
+.primary:hover {
+  border-color: var(--color-brand-strong);
+  background: var(--color-brand-strong);
+}
+
+.secondary {
+  border: 1.5px solid var(--color-ink);
+  background: #ffffff;
+  color: var(--color-ink);
+}
+
+.secondary:hover {
+  background: #f4f5f7;
+}
+
+.textButton {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-brand-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.primary:focus-visible,
+.secondary:focus-visible,
+.textButton:focus-visible,
+.close:focus-visible,
+.switch:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@media (min-width: 900px) {
+  .banner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .primary,
+  .secondary {
+    flex: 0 0 auto;
+  }
+}
+
+.dialog {
+  width: min(520px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 22px;
+  border: 1px solid #e4e6ec;
+  border-radius: 16px;
+  background: #ffffff;
+  color: var(--color-text);
+  box-shadow: 0 20px 48px rgba(17, 22, 36, 0.22);
+}
+
+.dialog::backdrop {
+  background: rgba(17, 22, 36, 0.45);
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.dialogHeading {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: #f4f5f7;
+}
+
+.dialogIntro {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.categories {
+  display: grid;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.category {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.categoryTitle {
+  display: block;
+  margin: 0 0 2px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.categoryBody {
+  display: block;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+.alwaysOn {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1f7a45;
+  white-space: nowrap;
+}
+
+/* A native checkbox drawn as a switch. */
+.switch {
+  position: relative;
+  width: 44px;
+  height: 26px;
+  margin: 0;
+  border-radius: 999px;
+  background: #c9ccd4;
+  cursor: pointer;
+  appearance: none;
+  transition: background 0.15s ease;
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(17, 22, 36, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.switch:checked {
+  background: var(--color-brand);
+}
+
+.switch:checked::after {
+  transform: translateX(18px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner {
+    animation: none;
+  }
+
+  .primary,
+  .secondary,
+  .switch,
+  .switch::after {
+    transition: none;
+  }
+}

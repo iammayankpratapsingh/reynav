@@ -1,0 +1,290 @@
+/* Styles for the billing switch and plan cards. */
+.section {
+  padding: 8px 16px 64px;
+  background: #ffffff;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Billing switch */
+.switchRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 32px;
+}
+
+.switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: #f6f7f9;
+}
+
+.switchOption {
+  min-height: 42px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.switchOption[aria-pressed="true"] {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: 0 1px 3px rgba(17, 22, 36, 0.12);
+}
+
+.saveNote {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(212, 85, 122, 0.1);
+  color: var(--color-brand-strong);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Cards */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px 30px;
+  border: 1px solid var(--color-border);
+  border-radius: 22px;
+  background: var(--color-surface);
+  box-shadow: 0 1px 2px rgba(17, 22, 36, 0.04);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.card:hover {
+  border-color: #dfe2ea;
+  box-shadow: 0 14px 34px rgba(17, 22, 36, 0.08);
+  transform: translateY(-3px);
+}
+
+.featured {
+  border-color: rgba(212, 85, 122, 0.45);
+  background:
+    radial-gradient(520px 220px at 50% -10%, rgba(240, 138, 169, 0.16), transparent 70%),
+    var(--color-surface);
+  box-shadow: 0 16px 40px rgba(189, 64, 104, 0.12);
+}
+
+.cardBadge {
+  align-self: flex-start;
+  margin: 0 0 12px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: var(--color-brand);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.planName {
+  margin: 0 0 6px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.tagline {
+  margin: 0 0 20px;
+  min-height: 44px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin: 0 0 6px;
+  color: var(--color-ink);
+}
+
+.currency {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.amount {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  animation: priceIn 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes priceIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.per {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.billingNote {
+  margin: 0 0 22px;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  margin-bottom: 26px;
+  padding: 0 24px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 6px;
+  color: var(--color-ink);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.cta:hover {
+  background: var(--color-ink);
+  color: #ffffff;
+}
+
+.featured .cta {
+  border-color: var(--color-brand);
+  background: var(--color-brand);
+  color: #ffffff;
+}
+
+.featured .cta:hover {
+  border-color: var(--color-brand-strong);
+  background: var(--color-brand-strong);
+}
+
+.featuresLabel {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.features {
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature {
+  display: grid;
+  grid-template-columns: 17px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+.feature svg {
+  margin-top: 2px;
+  color: var(--color-brand);
+}
+
+.switchOption:focus-visible,
+.cta:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .amount,
+  .switchOption {
+    transition: none;
+    animation: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 8px 24px 80px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+
+  .featured {
+    transform: translateY(-10px);
+  }
+
+  .featured:hover {
+    transform: translateY(-14px);
+  }
+}

@@ -1,0 +1,8 @@
+/* Styles for the interactive dotted background canvas. */
+.canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+}

@@ -1,0 +1,94 @@
+/* Oversized footer wordmark: a light pink-to-peach gradient that dissolves into the page, plus a one-off
+   sparkle at the top-left of the first letter. */
+.wordmark {
+  max-width: 1180px;
+  margin: clamp(28px, 5vw, 56px) auto 0;
+  font-size: clamp(4rem, 17.5vw, 15.5rem);
+  font-weight: 800;
+  line-height: 0.82;
+  text-align: center;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* The box hugs the letters, so the sparkles can sit on the first one wherever the word is centred. */
+.word {
+  position: relative;
+  display: inline-block;
+}
+
+.text {
+  display: inline-block;
+  padding-bottom: 0.04em;
+  /* Trailing letter-spacing is pulled back so the word sits optically centred. */
+  margin-right: -0.08em;
+  letter-spacing: 0.08em;
+  background: linear-gradient(100deg, #f5a9c0 0%, #f9c3b4 30%, #f1c4df 58%, #f7b3c6 82%, #fad2c2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-mask-image: linear-gradient(180deg, #000 20%, rgba(0, 0, 0, 0.25) 100%);
+  mask-image: linear-gradient(180deg, #000 20%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+.sparkle {
+  position: absolute;
+  fill: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 0.04em rgba(240, 138, 169, 0.9)) drop-shadow(0 0 0.1em rgba(249, 195, 180, 0.8));
+  animation: sparkle 1.6s ease-in-out both;
+}
+
+.sparkle[data-kind="main"] {
+  top: -0.1em;
+  left: -0.1em;
+  width: 0.24em;
+  height: 0.24em;
+  fill: #fff6f8;
+}
+
+.sparkle[data-kind="small"] {
+  top: 0.12em;
+  left: 0.16em;
+  width: 0.11em;
+  height: 0.11em;
+  animation-delay: 0.25s;
+}
+
+.sparkle[data-kind="tiny"] {
+  top: -0.12em;
+  left: 0.2em;
+  width: 0.07em;
+  height: 0.07em;
+  animation-delay: 0.45s;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-45deg);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.15) rotate(0deg);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(0.85) rotate(20deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1) rotate(35deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sparkle {
+    display: none;
+  }
+}

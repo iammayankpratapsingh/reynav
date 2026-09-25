@@ -1,0 +1,111 @@
+/* Styles for the landing feature strip. */
+.strip {
+  margin: 16px 12px 32px;
+  padding: 18px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-surface);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(44px, 12vw, 76px);
+  height: clamp(44px, 12vw, 76px);
+  border-radius: clamp(12px, 3vw, 16px);
+}
+
+.tile svg {
+  width: 55%;
+  height: 55%;
+}
+
+.label {
+  width: min-content;
+  font-size: clamp(0.68rem, 3vw, 1rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.blue {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.07);
+}
+
+.purple {
+  color: #7157e0;
+  background: rgba(113, 87, 224, 0.07);
+}
+
+.green {
+  color: #3f9b73;
+  background: rgba(63, 155, 115, 0.07);
+}
+
+.pink {
+  color: #e0457b;
+  background: rgba(224, 69, 123, 0.07);
+}
+
+.orange {
+  color: #f0a23b;
+  background: rgba(240, 162, 59, 0.08);
+}
+
+@media (min-width: 640px) {
+  .strip {
+    margin: 24px clamp(16px, 1.2vw, 20px) 48px;
+    padding: 28px 24px;
+  }
+
+  .label {
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .strip {
+    flex: 0 0 auto;
+    margin: clamp(10px, 1.6vh, 20px) clamp(8px, 1.2vw, 20px);
+    padding: clamp(12px, 2vh, 22px) 24px;
+  }
+
+  .item {
+    gap: 6px;
+  }
+
+  .tile {
+    width: clamp(48px, 7vh, 64px);
+    height: clamp(48px, 7vh, 64px);
+    border-radius: 14px;
+  }
+
+  .tile svg {
+    width: 55%;
+    height: 55%;
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+}

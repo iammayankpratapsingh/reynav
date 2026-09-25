@@ -1,0 +1,72 @@
+/* Styles for the landing footer. */
+.footer {
+  padding: 40px 20px 0;
+  overflow: hidden;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.inner {
+  display: grid;
+  gap: 24px;
+  max-width: 1180px;
+  margin: 0 auto 24px;
+}
+
+.brand {
+  margin: 0 0 6px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  color: var(--color-ink);
+}
+
+.tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+}
+
+.link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--color-ink);
+}
+
+.linkButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.link:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.rights {
+  max-width: 1180px;
+  margin: 0 auto;
+  font-size: 0.82rem;
+  color: #8a8f9c;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}

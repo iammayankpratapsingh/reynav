@@ -1,0 +1,130 @@
+/* Recommended Today: three actions with a tick box each. */
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 14px;
+  border: 1px solid #e4e6ec;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.heading {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.intro {
+  margin: 0 0 12px;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+}
+
+.empty {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--color-muted);
+}
+
+.list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0;
+  border-top: 1px solid #eceef2;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  padding: 0;
+  border: 2px solid #c9ccd4;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.check:hover:not(:disabled) {
+  border-color: var(--color-brand);
+}
+
+.check[aria-pressed="true"] {
+  border-color: #2f9e5f;
+  background: #2f9e5f;
+}
+
+.check:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.check:focus-visible,
+.link:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.text {
+  min-width: 0;
+}
+
+.label {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.item[data-done="true"] .label {
+  color: #8a8f9c;
+  text-decoration: line-through;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.effort {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #eef0f3;
+  font-weight: 700;
+  color: #3c404c;
+}
+
+.effort[data-effort="quick"] {
+  background: #e7f5ec;
+  color: #1f7a45;
+}
+
+.link {
+  font-weight: 600;
+  color: var(--color-brand-strong);
+}
+
+.error {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: #96214a;
+}

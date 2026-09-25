@@ -1,0 +1,12 @@
+/* Styles for the public landing route: header, hero and feature strip fill one screen on desktop. */
+.page {
+  --header-height: 72px;
+}
+
+@media (min-width: 1024px) {
+  .firstScreen {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - var(--header-height));
+  }
+}

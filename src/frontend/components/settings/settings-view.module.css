@@ -1,0 +1,362 @@
+/* Styles for the settings screen. */
+.page {
+  display: grid;
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.note {
+  margin: 14px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #8a8f9c;
+}
+
+/* Business details */
+.definitions {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.definitions .row:last-child {
+  border-bottom: 0;
+}
+
+.row dt {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5c6170;
+}
+
+.row dd {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  word-break: break-word;
+}
+
+/* Connections */
+.connections,
+.team,
+.dataPoints {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.connection {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.connections li:last-child,
+.team li:last-child {
+  border-bottom: 0;
+}
+
+.connectionName {
+  margin: 0 0 2px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.connectionMeta {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+/* Team */
+.member {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d4557a, #f0a3bd);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.memberBody {
+  min-width: 0;
+}
+
+.memberName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 2px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.you {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f1f2f5;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5c6170;
+}
+
+.memberEmail {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  word-break: break-all;
+}
+
+.role {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(212, 85, 122, 0.1);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: var(--color-brand-strong);
+}
+
+/* Plan */
+.plan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.planLabel {
+  margin: 0 0 3px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5c6170;
+}
+
+.planName {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+/* Data and privacy */
+.dataPoints {
+  gap: 10px;
+}
+
+.dataPoint {
+  display: grid;
+  grid-template-columns: 17px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+.dataPoint svg {
+  margin-top: 2px;
+  color: #1f7a45;
+}
+
+.dataActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* Buttons */
+.linkButton,
+.secondaryButton,
+.dangerButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.linkButton {
+  border: 1px solid #dcdfe6;
+  background: #ffffff;
+  color: #4f5462;
+}
+
+.linkButton:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand-strong);
+}
+
+.secondaryButton {
+  border: 1px solid #dcdfe6;
+  background: #ffffff;
+  color: #4f5462;
+}
+
+.dangerButton {
+  border: 1px solid #f0c2ce;
+  background: #ffffff;
+  color: #96214a;
+}
+
+.secondaryButton:disabled,
+.dangerButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.linkButton:focus-visible,
+.secondaryButton:focus-visible,
+.dangerButton:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (min-width: 620px) {
+  .row {
+    grid-template-columns: 200px minmax(0, 1fr);
+    align-items: baseline;
+    gap: 16px;
+  }
+}
+
+.invites {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.subheading {
+  margin: 6px 0 4px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.inviteForm {
+  display: grid;
+  gap: 8px;
+}
+
+.inviteRow {
+  display: grid;
+  gap: 10px;
+  align-items: end;
+}
+
+@media (min-width: 760px) {
+  .inviteRow {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  }
+}
+
+.inviteField {
+  display: grid;
+  gap: 5px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+}
+
+.formError {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #96214a;
+}
+
+.formSuccess {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #1f7a45;
+}
+
+.reportSettings {
+  display: grid;
+  gap: 12px;
+  max-width: 640px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-brand);
+}
+
+.reportFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.reportFacts dt {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7080;
+}
+
+.reportFacts dd {
+  margin: 2px 0 0;
+  color: var(--color-ink);
+}
+
+.reportSettings > button {
+  justify-self: start;
+}

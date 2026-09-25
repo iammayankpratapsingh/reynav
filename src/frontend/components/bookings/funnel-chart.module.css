@@ -1,0 +1,216 @@
+/* Styles for the search-to-revenue funnel. Axes stay recessive; the bars carry the meaning. */
+.card {
+  padding: 20px 22px;
+  border: 1px solid #e4e6ec;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.heading {
+  margin: 0 0 18px;
+  font-size: clamp(1.1rem, 4vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.layout {
+  display: grid;
+  gap: 18px;
+}
+
+.plot {
+  min-width: 0;
+}
+
+.bars {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 2px;
+  align-items: end;
+  height: 210px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barSlot {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 6px;
+  height: 100%;
+  padding: 0 6px;
+  text-align: center;
+}
+
+.barValue {
+  margin: 0;
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.barTrack {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 0;
+}
+
+.bar {
+  position: relative;
+  width: 100%;
+  max-width: 96px;
+  border-radius: 4px 4px 0 0;
+  transition: filter 0.15s ease;
+}
+
+.bar:hover {
+  filter: brightness(1.06);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: 7px 11px;
+  border-radius: 8px;
+  background: #171a24;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.bar:hover .tooltip {
+  opacity: 1;
+}
+
+.baseline {
+  height: 1px;
+  margin-top: 0;
+  background: #dcdfe6;
+}
+
+.barLabel {
+  margin: 0;
+  padding-top: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #5c6170;
+}
+
+/* Revenue sits beside the chart, not on its axis. */
+.revenue {
+  align-self: center;
+  padding: 16px 18px;
+  border: 1px solid #f0d7e0;
+  border-radius: 14px;
+  background: #fdf9f6;
+}
+
+.revenueLabel {
+  margin: 0 0 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #5c6170;
+}
+
+.revenueValue {
+  margin: 0 0 6px;
+  font-size: clamp(1.9rem, 7vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-brand-strong);
+}
+
+.revenueHint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #8a8f9c;
+}
+
+.note {
+  margin: 16px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #8a8f9c;
+}
+
+/* Table view */
+.table {
+  margin-top: 10px;
+}
+
+.tableToggle {
+  display: inline-block;
+  padding: 4px 0;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-brand);
+  cursor: pointer;
+}
+
+.tableToggle:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.dataTable {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.dataTable th,
+.dataTable td {
+  padding: 9px 12px 9px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.dataTable thead th {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #8a8f9c;
+}
+
+.dataTable tbody th {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.dataTable td {
+  text-align: right;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .tooltip {
+    transition: none;
+  }
+}
+
+@media (min-width: 860px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: 28px;
+  }
+}

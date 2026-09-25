@@ -1,0 +1,237 @@
+/* Styles for the authenticated sidebar and its mobile drawer. */
+.mobileBar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 16px;
+  background: #12151d;
+  color: #ffffff;
+}
+
+.mobileBrand {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+}
+
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.sidebar {
+  display: none;
+  flex-direction: column;
+  gap: 28px;
+  padding: 26px 16px 22px;
+  background: #12151d;
+  color: #ffffff;
+}
+
+.sidebar[data-open="true"] {
+  display: flex;
+}
+
+.brand {
+  padding: 0 10px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.nav {
+  display: grid;
+  gap: 4px;
+}
+
+.item,
+.itemDisabled {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.item {
+  color: rgba(255, 255, 255, 0.72);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.item[aria-current="page"] {
+  background: linear-gradient(90deg, rgba(189, 64, 104, 0.55), rgba(189, 64, 104, 0.16));
+  color: #ffffff;
+  box-shadow: inset 2px 0 0 var(--color-brand);
+}
+
+.itemDisabled {
+  color: rgba(255, 255, 255, 0.34);
+  cursor: default;
+}
+
+.soon {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.account {
+  margin-top: auto;
+  padding: 16px 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.accountName {
+  margin: 0 0 2px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.accountMeta {
+  margin: 0 0 14px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.signOut {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.signOut:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.brand:focus-visible,
+.item:focus-visible,
+.signOut:focus-visible,
+.menuButton:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+@media (min-width: 1024px) {
+  .mobileBar {
+    display: none;
+  }
+
+  /* The sidebar itself never scrolls: brand, location and account stay put, only the items move. */
+  .sidebar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    padding: 34px 20px 24px;
+    overflow: hidden;
+  }
+
+  .nav {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    align-content: start;
+    /* Room for the focus ring, which would otherwise be clipped by the scroll area. */
+    margin: -6px -8px;
+    padding: 6px 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  }
+
+  .nav::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .nav::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .brand,
+  .locationPicker,
+  .account {
+    flex: none;
+  }
+
+  .account {
+    margin-top: 0;
+  }
+}
+
+.locationPicker {
+  display: grid;
+  gap: 6px;
+  margin-top: -12px;
+  padding: 0 10px;
+}
+
+.locationLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.locationSelect {
+  min-height: 38px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: #1c2030;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.locationSelect:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}

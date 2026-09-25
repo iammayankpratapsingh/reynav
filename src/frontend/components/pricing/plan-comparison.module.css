@@ -1,0 +1,158 @@
+/* Styles for the plan comparison matrix. */
+.section {
+  padding: 8px 0 64px;
+  background: #ffffff;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.intro {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.heading {
+  margin: 0 0 12px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.lead {
+  margin: 0;
+  font-size: clamp(0.95rem, 3.4vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.scroller {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 16px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.planHead {
+  padding: 14px 16px;
+  border-bottom: 2px solid var(--color-border);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.groupHead {
+  padding: 22px 16px 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+  text-align: left;
+  background: #ffffff;
+}
+
+.rowHead {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  padding: 13px 16px 13px 0;
+  border-bottom: 1px solid var(--color-border);
+  background: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.cell {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.featured {
+  background: rgba(212, 85, 122, 0.05);
+}
+
+.text {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.yes {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(212, 85, 122, 0.12);
+  color: var(--color-brand-strong);
+}
+
+.no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: #9aa0ad;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 8px 0 80px;
+  }
+
+  .scroller {
+    padding: 0 24px;
+  }
+
+  .rowHead,
+  .cell,
+  .planHead {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .rowHead {
+    padding-left: 0;
+  }
+}
