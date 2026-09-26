@@ -5,6 +5,7 @@
 // chat opens itself once per visit, a few seconds in.
 import Script from "next/script";
 import { useEffect } from "react";
+import { mountRobotFace } from "./chatbase-robot-face";
 
 const CHATBASE_EMBED = `(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="Kuqg51liWizcdRHp3ovo_";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();`;
 
@@ -93,6 +94,9 @@ export function ChatbaseWidget() {
       document.documentElement.classList.remove(MINIMISED_CLASS);
     };
   }, []);
+
+  // The bubble wears a robot face whose eyes follow the pointer.
+  useEffect(() => mountRobotFace(), []);
 
   return <Script id="chatbase-embed" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: CHATBASE_EMBED }} />;
 }

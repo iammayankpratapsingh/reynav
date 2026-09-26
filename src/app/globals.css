@@ -73,3 +73,108 @@ html {
     box-shadow: 0 0 0 4px rgba(212, 85, 122, 0.45);
   }
 }
+
+/* Robot face over the chat bubble (chatbase-robot-face.ts). It sits above Chatbase's icon while the chat is
+   closed and fades out when it opens, so Chatbase's close arrow shows. Clicks go through to the button. */
+.reynav-bot {
+  position: absolute;
+  inset: 0;
+  z-index: 2147483647;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background: var(--color-brand);
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.reynav-bot svg {
+  width: 88%;
+  height: 88%;
+  overflow: visible;
+}
+
+#chatbase-bubble-button[aria-expanded="true"] .reynav-bot {
+  opacity: 0;
+}
+
+.reynav-bot-head,
+.reynav-bot-pupil {
+  transition: transform 0.12s ease-out;
+}
+
+.reynav-bot-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: reynav-bot-blink 4.5s infinite;
+}
+
+.reynav-bot-bulb {
+  fill: #ffd166;
+  animation: reynav-bot-glow 2.4s ease-in-out infinite;
+}
+
+/* Happy face while the bubble is hovered, focused or pressed (the press covers taps on phones). */
+.reynav-bot-happy {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.reynav-bot-eyes,
+.reynav-bot-smile {
+  transition: opacity 0.15s ease;
+}
+
+#chatbase-bubble-button:is(:hover, :focus-visible, :active) .reynav-bot-happy {
+  opacity: 1;
+}
+
+#chatbase-bubble-button:is(:hover, :focus-visible, :active) :is(.reynav-bot-eyes, .reynav-bot-smile) {
+  opacity: 0;
+}
+
+#chatbase-bubble-button:is(:hover, :focus-visible, :active) .reynav-bot svg {
+  animation: reynav-bot-bounce 0.5s ease-out;
+}
+
+@keyframes reynav-bot-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-8%);
+  }
+  70% {
+    transform: translateY(2%);
+  }
+}
+
+@keyframes reynav-bot-blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes reynav-bot-glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reynav-bot-eyes,
+  .reynav-bot-bulb,
+  #chatbase-bubble-button .reynav-bot svg {
+    animation: none;
+  }
+}
