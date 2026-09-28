@@ -28,6 +28,7 @@ export async function signInAction(_previous: LoginFormState, formData: FormData
     throw error;
   }
 
-  // Home sends anyone who has not finished onboarding on to the wizard.
-  return { error: null, redirectTo: "/dashboard" };
+  // Every sign-in walks through the four setup steps, prefilled with what was saved last time; the last step
+  // starts a fresh scan and lands on Home.
+  return { error: null, redirectTo: "/onboarding" };
 }
