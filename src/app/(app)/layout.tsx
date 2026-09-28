@@ -10,6 +10,9 @@ import { appShellCopy } from "@/frontend/copy/app-shell";
 import { VerticalLabelsProvider } from "@/frontend/providers/vertical-labels-provider";
 import styles from "./layout.module.css";
 
+/** Starting a scan runs it after the response, in the same function; a full simulated scan takes ~25s. */
+export const maxDuration = 60;
+
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const ctx = await getTenant();
   if (!ctx) redirect("/login");

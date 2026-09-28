@@ -37,6 +37,8 @@ export default async function DashboardPage() {
 
   return (
     <DashboardView
+      // A new scan (started from this screen) remounts the view, so it polls the new scan from a fresh state.
+      key={data.scan?.scanId ?? "no-scan"}
       initial={data}
       copy={copy}
       greeting={greetingFor(now.getHours(), copy.greetings)}

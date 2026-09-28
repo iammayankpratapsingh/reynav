@@ -15,6 +15,7 @@ export function dashboardCopy(labels: VerticalLabels) {
       /** Copy crosses to a client component, so placeholders are filled in there, not by a function here. */
       signalsIn: "{done} of {total} signals in",
       failed: "The scan stopped before it could finish",
+      retry: "Scan again",
     },
     subScores: {
       heading: "Score breakdown",

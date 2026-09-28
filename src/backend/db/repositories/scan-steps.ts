@@ -77,6 +77,15 @@ export async function markFailed(
   `;
 }
 
+/** Closes every step that never finished, for a scan that will not continue. */
+export async function failUnfinished(ctx: TenantContext, scanId: string, errorCode: string): Promise<void> {
+  if (!isUuid(scanId)) return;
+  await getSql()`
+    update scan_steps set status = 'failed', finished_at = now(), error_code = ${errorCode}, updated_at = now()
+    where scan_id = ${scanId} and organization_id = ${ctx.organizationId} and status in ('waiting', 'running')
+  `;
+}
+
 export async function listForScan(ctx: TenantContext, scanId: string): Promise<ScanStepRecord[]> {
   if (!isUuid(scanId)) return [];
   const rows = await getSql()<ScanStepRow[]>`

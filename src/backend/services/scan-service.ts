@@ -16,6 +16,24 @@ import { getOnboardingState, requirePrimaryBusiness } from "./onboarding-service
 /** How long after a finished scan the next one is due. */
 export const RESCAN_INTERVAL_MS = 7 * 24 * 60 * 60 * 1000;
 
+/**
+ * A scan runs inside the request function that started it, which is capped well under this. One still
+ * unfinished after it was lost with its instance (a crash, a timeout, a deploy) and will never finish.
+ */
+const STALE_SCAN_MS = 5 * 60 * 1000;
+
+/** Marks a scan that can no longer finish as failed, so the screen stops waiting and a new scan can start. */
+export async function failIfStale(ctx: TenantContext, scan: Scan, now: Date = new Date()): Promise<Scan> {
+  if (scan.status !== "queued" && scan.status !== "running") return scan;
+  if (now.getTime() - new Date(scan.startedAt).getTime() < STALE_SCAN_MS) return scan;
+
+  const finishedAt = now.toISOString();
+  await scanStepsRepository.failUnfinished(ctx, scan.id, "stale");
+  await scansRepository.setStatus(ctx, scan.id, "failed", finishedAt);
+  logger.warn({ message: "stale scan marked failed", organizationId: ctx.organizationId, scanId: scan.id });
+  return { ...scan, status: "failed", finishedAt };
+}
+
 /** A scan someone asked for: someone is watching, so it runs at interactive priority. */
 export async function start(ctx: TenantContext): Promise<Scan> {
   const scan = await queue(ctx, "interactive");
@@ -30,7 +48,8 @@ export async function start(ctx: TenantContext): Promise<Scan> {
  * already queued or running. Returns whether it started one.
  */
 export async function startIfDue(ctx: TenantContext, now: Date): Promise<boolean> {
-  const latest = await scansRepository.findLatest(ctx);
+  const found = await scansRepository.findLatest(ctx);
+  const latest = found && (await failIfStale(ctx, found, now));
   if (latest && (latest.status === "queued" || latest.status === "running")) return false;
   const due = nextScheduledAt(latest);
   if (due !== null && due.getTime() > now.getTime()) return false;

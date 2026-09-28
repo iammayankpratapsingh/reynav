@@ -20,7 +20,7 @@ import type { OpportunityDetail } from "@/shared/types/opportunity";
 import type { Scan } from "@/shared/types/scan";
 import type { TenantContext } from "@/shared/types/tenant";
 import { getWorkspace } from "./organization-service";
-import { RESCAN_INTERVAL_MS } from "./scan-service";
+import { failIfStale, RESCAN_INTERVAL_MS } from "./scan-service";
 
 const TOP_OPPORTUNITIES = 5;
 const RECENT_WINDOW = 20;
@@ -29,15 +29,17 @@ const EFFORT_ORDER = { quick: 0, medium: 1, project: 2 } as const;
 
 export async function getDashboard(ctx: TenantContext): Promise<DashboardData> {
   const recent = await scansRepository.listRecent(ctx, RECENT_WINDOW);
-  const latest = recent[0];
-  if (!latest) return emptyView(ctx);
+  const found = recent[0];
+  if (!found) return emptyView(ctx);
+  const latest = await failIfStale(ctx, found);
   return buildView(ctx, latest, previousCompleted(recent, latest.id), recent);
 }
 
 /** The polling view for one scan, used while it is still running. */
 export async function getScanView(ctx: TenantContext, scanId: string): Promise<DashboardData> {
-  const scan = await scansRepository.findById(ctx, scanId);
-  if (!scan) throw new NotFoundError(`No scan ${scanId} for organisation ${ctx.organizationId}`);
+  const found = await scansRepository.findById(ctx, scanId);
+  if (!found) throw new NotFoundError(`No scan ${scanId} for organisation ${ctx.organizationId}`);
+  const scan = await failIfStale(ctx, found);
 
   const recent = await scansRepository.listRecent(ctx, RECENT_WINDOW);
   return buildView(ctx, scan, previousCompleted(recent, scanId), recent);

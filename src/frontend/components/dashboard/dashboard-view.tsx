@@ -165,6 +165,11 @@ export function DashboardView({ initial, copy, greeting, formattedDate, notifica
           signalsDone={signalsDone}
           signalsTotal={SUB_SCORE_KEYS.length}
         />
+        {data.scan.status === "failed" && (
+          <div>
+            <ScanLocationButton copy={{ scan: copy.growth.retry, starting: copy.empty.starting }} />
+          </div>
+        )}
 
         <SubScoreTiles copy={copy.subScores} subScores={data.scores.subScores} />
 
@@ -240,8 +245,8 @@ function Header({
   );
 }
 
-/** Starts the first scan of a location that has none yet — typically one just added. */
-function ScanLocationButton({ copy }: { copy: DashboardCopy["empty"] }) {
+/** Starts a scan of the active location: its first (typically one just added), or again after one failed. */
+function ScanLocationButton({ copy }: { copy: { scan: string; starting: string } }) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isStarting, startTransition] = useTransition();
