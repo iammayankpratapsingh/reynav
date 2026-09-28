@@ -65,6 +65,7 @@ export async function getOnboardingState(ctx: TenantContext): Promise<Onboarding
     locationLabel: location.label,
     address: location.address,
     addressSource: location.addressSource,
+    searchRadiusKm: location.searchRadiusKm,
     connections,
     bookingPlatformId: platformFromLabel(byProvider.get("booking-source")),
     bookingImport,

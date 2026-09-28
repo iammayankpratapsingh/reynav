@@ -12,7 +12,7 @@ const NEARBY_LIMIT = 10;
 
 export async function collectCompetitors(scan: ScanContext): Promise<void> {
   const rivals = await getCompetitorDirectory().findNearby({
-    location: scan.geo,
+    area: { ...scan.geo, radiusKm: scan.searchRadiusKm },
     keywords: scan.keywords,
     limit: NEARBY_LIMIT,
   });

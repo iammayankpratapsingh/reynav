@@ -4,6 +4,6 @@ import type { VerticalMarketing } from "@/shared/types/vertical";
 export const marketing: VerticalMarketing = {
   heroImage: {
     src: "/images/hero.webp",
-    alt: "Woman with long, glossy wavy hair seen from behind in soft window light",
+    alt: "Smiling business owner checking a tablet in her sunlit shop",
   },
 };

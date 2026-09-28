@@ -1,5 +1,5 @@
 // Landing feature strip: the sources REYNAV connects and the outcome it drives.
-import { BriefcaseBusiness, FileText, House, MapPin, Users, type LucideIcon } from "lucide-react";
+import { BriefcaseBusiness, FileText, House, Sparkles, Users, type LucideIcon } from "lucide-react";
 import type { HomeCopy } from "@/frontend/copy/home";
 import styles from "./feature-strip.module.css";
 
@@ -9,7 +9,7 @@ const icons: Record<FeatureId, { Icon: LucideIcon; tone: string }> = {
   listing: { Icon: House, tone: styles.blue },
   website: { Icon: FileText, tone: styles.purple },
   booking: { Icon: BriefcaseBusiness, tone: styles.green },
-  ai: { Icon: MapPin, tone: styles.pink },
+  ai: { Icon: Sparkles, tone: styles.pink },
   customers: { Icon: Users, tone: styles.orange },
 };
 

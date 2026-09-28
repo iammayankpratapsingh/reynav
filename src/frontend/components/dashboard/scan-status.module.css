@@ -172,6 +172,11 @@
   gap: 10px;
 }
 
+/* The app's compact chat bubble shares this corner; sit just above it. */
+:global(.reynav-chat-compact) .indicator {
+  bottom: 68px;
+}
+
 .pill {
   display: inline-flex;
   align-items: center;

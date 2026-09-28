@@ -1,6 +1,6 @@
 import "server-only";
 // CompetitorDirectory: who else shows up for the same searches nearby, and what their presence looks like.
-import type { GeoTarget } from "@/shared/types/geo";
+import type { GeoArea } from "@/shared/types/geo";
 
 export type CompetitorKeywordPosition = {
   keyword: string;
@@ -25,10 +25,19 @@ export type Competitor = {
   totalPages: number;
   postsLast90Days: number;
   photoCount: number;
+  /** Straight-line distance from the searched location, in kilometres. */
+  distanceKm: number;
   source: string;
   fetchedAt: Date;
 };
 
+export type FindNearbyInput = {
+  /** The location and how far around it to look. Only businesses inside the radius are returned. */
+  area: GeoArea;
+  keywords: readonly string[];
+  limit: number;
+};
+
 export interface CompetitorDirectory {
-  findNearby(input: { location: GeoTarget; keywords: readonly string[]; limit: number }): Promise<Competitor[]>;
+  findNearby(input: FindNearbyInput): Promise<Competitor[]>;
 }

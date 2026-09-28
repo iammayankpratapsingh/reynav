@@ -20,6 +20,7 @@ const BUBBLE_BUTTON_ID = "chatbase-bubble-button";
 const MINIMISE_MEDIA = "(min-width: 640px)";
 const MINIMISE_SCROLL_PX = 120;
 const MINIMISED_CLASS = "reynav-chat-minimised";
+const HIDDEN_CLASS = "reynav-chat-hidden";
 
 declare global {
   interface Window {
@@ -97,6 +98,16 @@ export function ChatbaseWidget() {
 
   // The bubble wears a robot face whose eyes follow the pointer.
   useEffect(() => mountRobotFace(), []);
+
+  // Chatbase adds its bubble straight to the page, where it would outlive this component when the visitor moves
+  // into the app without a full page load. Hide and close it when unmounted; show it again on the way back.
+  useEffect(() => {
+    document.documentElement.classList.remove(HIDDEN_CLASS);
+    return () => {
+      window.chatbase?.("close");
+      document.documentElement.classList.add(HIDDEN_CLASS);
+    };
+  }, []);
 
   return <Script id="chatbase-embed" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: CHATBASE_EMBED }} />;
 }

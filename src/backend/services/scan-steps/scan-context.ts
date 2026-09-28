@@ -23,6 +23,8 @@ export type ScanContext = {
   websiteUrl: string;
   locationId: string;
   geo: GeoTarget;
+  /** How far from the location to look for competitors, as the owner chose in onboarding. */
+  searchRadiusKm: number;
   city: string;
   pack: VerticalPack;
   keywords: readonly string[];
@@ -86,6 +88,7 @@ export async function buildScanContext(ctx: TenantContext, scanId: string): Prom
     websiteUrl: business.websiteUrl,
     locationId: location.id,
     geo: { label: location.label, countryCode: "CA", latitude: 43.6832, longitude: -79.7629 },
+    searchRadiusKm: location.searchRadiusKm,
     city,
     pack,
     keywords,

@@ -40,6 +40,8 @@ export type OnboardingState = {
   locationLabel: string;
   address: PostalAddress | null;
   addressSource: AddressSource | null;
+  /** How far from the location to look for competitors, in kilometres. */
+  searchRadiusKm: number;
   connections: Connection[];
   /** Which platform the booking connection belongs to, when one is linked. */
   bookingPlatformId: BookingPlatformId | null;

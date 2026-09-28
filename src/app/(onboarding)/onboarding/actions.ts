@@ -57,9 +57,9 @@ export async function disconnectAction(provider: string): Promise<OnboardingActi
   return run(() => connectionService.disconnect(ctx, parsed.data));
 }
 
-export async function saveAddressAction(address: unknown): Promise<OnboardingActionResult> {
+export async function saveLocationAction(input: unknown): Promise<OnboardingActionResult> {
   const ctx = await requireTenant();
-  return run(() => connectionService.saveAddress(ctx, address));
+  return run(() => connectionService.saveLocation(ctx, input));
 }
 
 export async function removeBookingImportAction(): Promise<OnboardingActionResult> {

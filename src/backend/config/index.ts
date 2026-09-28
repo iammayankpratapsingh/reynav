@@ -14,6 +14,8 @@ const ConfigSchema = z.object({
   nodeEnv: z.enum(["development", "test", "production"]).default("development"),
   /** When true every adapter resolves to its mock. Nothing leaves the process. */
   useMockData: booleanish("true"),
+  /** Postgres connection string. Checked when the first query runs, so a build without it still succeeds. */
+  databaseUrl: z.string().min(1).optional(),
   session: z.object({
     /** HMAC key for the session cookie. Required outside development. */
     secret: z.string().min(32),
@@ -42,6 +44,7 @@ function read(): AppConfig {
   const parsed = ConfigSchema.safeParse({
     nodeEnv,
     useMockData: process.env.USE_MOCK_DATA,
+    databaseUrl: process.env.DATABASE_URL || undefined,
     session: {
       secret: process.env.SESSION_SECRET ?? (nodeEnv === "production" ? undefined : DEVELOPMENT_SESSION_SECRET),
       cookieName: process.env.SESSION_COOKIE_NAME,

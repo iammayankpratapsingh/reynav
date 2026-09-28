@@ -11,7 +11,7 @@ import { logger } from "@/backend/lib/logger";
 import { bookingPlatformName, type BookingPlatformId } from "@/shared/constants/booking-platforms";
 import { canManageConnections } from "@/shared/constants/roles";
 import { UnauthorizedError } from "@/shared/errors";
-import { PostalAddressSchema, SetWebsiteSchema } from "@/shared/schemas/business";
+import { SaveLocationSchema, SetWebsiteSchema } from "@/shared/schemas/business";
 import type { AuthorizableProvider, ConnectionProvider } from "@/shared/types/connection";
 import type { OnboardingState } from "@/shared/types/onboarding";
 import type { TenantContext } from "@/shared/types/tenant";
@@ -105,18 +105,22 @@ async function fillAddressFromListing(ctx: TenantContext): Promise<void> {
   logger.info({ message: "address filled from listing", organizationId: ctx.organizationId });
 }
 
-export async function saveAddress(ctx: TenantContext, input: unknown): Promise<OnboardingState> {
+/** The onboarding location form: the address (when one was entered) and how far to look for competitors. */
+export async function saveLocation(ctx: TenantContext, input: unknown): Promise<OnboardingState> {
   requireManager(ctx);
-  const address = PostalAddressSchema.parse(input);
+  const { address, searchRadiusKm } = SaveLocationSchema.parse(input);
   const location = await requirePrimaryLocation(ctx);
 
-  // Saving what the listing filled in unchanged keeps it marked as fetched, not typed.
-  const isUnchanged =
-    location.addressSource === "listing" &&
-    location.address !== null &&
-    (Object.keys(address) as (keyof typeof address)[]).every((key) => address[key] === location.address?.[key]);
+  if (address) {
+    // Saving what the listing filled in unchanged keeps it marked as fetched, not typed.
+    const isUnchanged =
+      location.addressSource === "listing" &&
+      location.address !== null &&
+      (Object.keys(address) as (keyof typeof address)[]).every((key) => address[key] === location.address?.[key]);
+    await locationsRepository.saveAddress(ctx, location.id, address, isUnchanged ? "listing" : "manual");
+  }
 
-  await locationsRepository.saveAddress(ctx, location.id, address, isUnchanged ? "listing" : "manual");
+  await locationsRepository.saveSearchRadius(ctx, location.id, searchRadiusKm);
   return getOnboardingState(ctx);
 }
 

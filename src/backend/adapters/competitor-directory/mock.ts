@@ -1,6 +1,7 @@
 import "server-only";
-// Mock CompetitorDirectory: ten nearby rivals, deterministic, spread from clearly ahead to clearly behind.
-import type { Competitor, CompetitorDirectory } from "./types";
+// Mock CompetitorDirectory: ten nearby rivals, deterministic, spread from clearly ahead to clearly behind, and
+// from around the corner to across town so the search radius changes who is found.
+import type { Competitor, CompetitorDirectory, FindNearbyInput } from "./types";
 
 type Rival = Omit<Competitor, "source" | "fetchedAt" | "keywordPositions"> & {
   /** Offset added to their average position per keyword, so each keyword ranks a little differently. */
@@ -32,6 +33,7 @@ const rivals: readonly Rival[] = [
     totalPages: 28,
     postsLast90Days: 14,
     photoCount: 96,
+    distanceKm: 1.2,
     spread: [0, 1, -1, 0, 1, 0],
   },
   {
@@ -47,6 +49,7 @@ const rivals: readonly Rival[] = [
     totalPages: 22,
     postsLast90Days: 9,
     photoCount: 71,
+    distanceKm: 2.8,
     spread: [1, 0, 1, -1, 0, 2],
   },
   {
@@ -62,6 +65,7 @@ const rivals: readonly Rival[] = [
     totalPages: 18,
     postsLast90Days: 11,
     photoCount: 64,
+    distanceKm: 4.1,
     spread: [2, -1, 0, 1, 2, 0],
   },
   {
@@ -77,6 +81,7 @@ const rivals: readonly Rival[] = [
     totalPages: 15,
     postsLast90Days: 16,
     photoCount: 132,
+    distanceKm: 6.5,
     spread: [3, 2, 1, -2, 3, 2],
   },
   {
@@ -92,6 +97,7 @@ const rivals: readonly Rival[] = [
     totalPages: 11,
     postsLast90Days: 4,
     photoCount: 38,
+    distanceKm: 3.4,
     spread: [-1, 1, 2, 3, 1, 0],
   },
   {
@@ -107,6 +113,7 @@ const rivals: readonly Rival[] = [
     totalPages: 14,
     postsLast90Days: 6,
     photoCount: 45,
+    distanceKm: 8.2,
     spread: [1, 2, 0, 2, -2, 1],
   },
   {
@@ -122,6 +129,7 @@ const rivals: readonly Rival[] = [
     totalPages: 0,
     postsLast90Days: 2,
     photoCount: 22,
+    distanceKm: 12.5,
     spread: [2, 3, 1, 0, 2, 3],
   },
   {
@@ -137,6 +145,7 @@ const rivals: readonly Rival[] = [
     totalPages: 8,
     postsLast90Days: 3,
     photoCount: 29,
+    distanceKm: 9.6,
     spread: [0, 2, 3, 1, 1, 2],
   },
   {
@@ -152,6 +161,7 @@ const rivals: readonly Rival[] = [
     totalPages: 16,
     postsLast90Days: 5,
     photoCount: 51,
+    distanceKm: 16.8,
     spread: [3, 1, 2, 2, 0, 1],
   },
   {
@@ -167,14 +177,16 @@ const rivals: readonly Rival[] = [
     totalPages: 7,
     postsLast90Days: 1,
     photoCount: 18,
+    distanceKm: 14.3,
     spread: [1, 0, 2, 3, 2, 1],
   },
 ];
 
 export class MockCompetitorDirectory implements CompetitorDirectory {
-  async findNearby({ keywords, limit }: { keywords: readonly string[]; limit: number }): Promise<Competitor[]> {
+  async findNearby({ area, keywords, limit }: FindNearbyInput): Promise<Competitor[]> {
     const fetchedAt = new Date();
-    return rivals.slice(0, limit).map(({ spread, ...rival }) => ({
+    const inRange = rivals.filter((rival) => rival.distanceKm <= area.radiusKm);
+    return inRange.slice(0, limit).map(({ spread, ...rival }) => ({
       ...rival,
       keywordPositions: keywords.map((keyword, index) => {
         const position = Math.round(rival.averageMapPosition + (spread[index % spread.length] ?? 0));

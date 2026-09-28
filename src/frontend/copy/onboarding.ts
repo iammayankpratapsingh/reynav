@@ -67,6 +67,12 @@ export function onboardingCopy(labels: VerticalLabels) {
         region: "Province / State",
         postalCode: "Postal code",
       },
+      radius: {
+        label: "Competitor search area",
+        note: "How far from your business should we look for competitors? We compare you with businesses inside this distance.",
+        /** {km} is filled in on the client. */
+        value: "{km} km",
+      },
     },
     bookings: {
       heading: `Where do your ${bookings} live?`,
@@ -97,6 +103,8 @@ export function onboardingCopy(labels: VerticalLabels) {
       edit: "Edit",
       notConnected: "Not connected",
       notAdded: "Not added",
+      /** {km} is filled in on the client. */
+      withinKm: "Within {km} km",
       skipped: "Skipped",
       rows: {
         website: "Website",
@@ -104,6 +112,7 @@ export function onboardingCopy(labels: VerticalLabels) {
         services: "Services",
         segments: "Customer segments",
         location: "Location",
+        searchRadius: "Competitor search area",
         "local-listing": "Google Business Profile",
         "search-performance": "Google Search Console",
         "web-analytics": "Google Analytics",

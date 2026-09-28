@@ -37,4 +37,6 @@ export type Location = {
   label: string;
   address: PostalAddress | null;
   addressSource: AddressSource | null;
+  /** How far from this location to look for competitors, in kilometres. */
+  searchRadiusKm: number;
 };

@@ -5,7 +5,6 @@ import { siteCopy } from "./site";
 export function resourcesCopy(labels: VerticalLabels) {
   const site = siteCopy();
   const business = labels.business.toLowerCase();
-  const businesses = labels.businessPlural.toLowerCase();
   const customers = labels.customerPlural.toLowerCase();
   const bookings = labels.bookingPlural.toLowerCase();
 
@@ -18,7 +17,7 @@ export function resourcesCopy(labels: VerticalLabels) {
     hero: {
       eyebrow: "Resources",
       headline: "Learn the craft of getting found",
-      lead: `Everything we know about local search, Google Business Profile, AI assistants and turning attention into ${bookings} — written for ${businesses}, not for marketers.`,
+      lead: `Everything we know about local search, Google Business Profile, AI assistants and turning attention into ${bookings} — written for business owners, not for marketers.`,
       note: "We are writing the full library now. Here is what is coming, and roughly when.",
     },
     categories: {

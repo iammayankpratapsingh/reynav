@@ -1,8 +1,9 @@
 import "server-only";
 // Competitor snapshots: the business and its rivals as one scan saw them. Stored per scan so the page reads
 // a lookup and a later scan can be compared with an earlier one.
+import type postgres from "postgres";
 import { z } from "zod";
-import { db } from "@/backend/db/client";
+import { getSql, isUuid } from "@/backend/db/client";
 import type { CompetitorProfile } from "@/shared/types/competitor";
 import type { TenantContext } from "@/shared/types/tenant";
 
@@ -30,28 +31,31 @@ export async function replaceForScan(
   ctx: TenantContext,
   input: { scanId: string; locationId: string; profiles: readonly CompetitorProfile[] },
 ): Promise<void> {
-  db.competitorSnapshots.remove((row) => row.organization_id === ctx.organizationId && row.scan_id === input.scanId);
-  const createdAt = new Date().toISOString();
-  input.profiles.forEach((profile, index) => {
-    db.competitorSnapshots.insert({
-      id: `comp_${input.scanId}_${index}`,
-      organization_id: ctx.organizationId,
-      location_id: input.locationId,
-      scan_id: input.scanId,
-      name: profile.name,
-      is_self: profile.isYou,
-      profile_json: JSON.stringify(profile),
-      created_at: createdAt,
-    });
+  const sql = getSql();
+  const rows = input.profiles.map((profile, index) => ({
+    organization_id: ctx.organizationId,
+    location_id: input.locationId,
+    scan_id: input.scanId,
+    name: profile.name,
+    is_self: profile.isYou,
+    profile: sql.json(profile as unknown as postgres.JSONValue),
+    sort_order: index,
+  }));
+  await sql.begin(async (tx) => {
+    await tx`delete from competitor_snapshots where scan_id = ${input.scanId} and organization_id = ${ctx.organizationId}`;
+    if (rows.length > 0) await tx`insert into competitor_snapshots ${tx(rows)}`;
   });
 }
 
 export async function listForScan(ctx: TenantContext, scanId: string): Promise<CompetitorProfile[]> {
-  return db.competitorSnapshots
-    .filter((row) => row.organization_id === ctx.organizationId && row.scan_id === scanId)
-    .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }))
-    .flatMap((row) => {
-      const parsed = ProfileSchema.safeParse(JSON.parse(row.profile_json));
-      return parsed.success ? [parsed.data] : [];
-    });
+  if (!isUuid(scanId)) return [];
+  const rows = await getSql()<{ profile: unknown }[]>`
+    select profile from competitor_snapshots
+    where scan_id = ${scanId} and organization_id = ${ctx.organizationId}
+    order by sort_order
+  `;
+  return rows.flatMap((row) => {
+    const parsed = ProfileSchema.safeParse(row.profile);
+    return parsed.success ? [parsed.data] : [];
+  });
 }

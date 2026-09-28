@@ -1,5 +1,6 @@
 // Input schemas for business setup. Parsed at every boundary: Server Actions, routes and job payloads.
 import { z } from "zod";
+import { SEARCH_RADIUS_KM } from "@/shared/constants/search-radius";
 
 /** Accepts what someone actually types ("www.example.ca") and normalises it to a URL we can crawl. */
 export const WebsiteUrlSchema = z
@@ -39,3 +40,17 @@ export const PostalAddressSchema = z.object({
 });
 
 export type PostalAddressInput = z.infer<typeof PostalAddressSchema>;
+
+export const SearchRadiusSchema = z
+  .number()
+  .int()
+  .min(SEARCH_RADIUS_KM.min, `Choose at least ${SEARCH_RADIUS_KM.min} km.`)
+  .max(SEARCH_RADIUS_KM.max, `Choose at most ${SEARCH_RADIUS_KM.max} km.`);
+
+/** The onboarding location form: an address when one was entered, and the competitor search radius. */
+export const SaveLocationSchema = z.object({
+  address: PostalAddressSchema.nullable(),
+  searchRadiusKm: SearchRadiusSchema,
+});
+
+export type SaveLocationInput = z.infer<typeof SaveLocationSchema>;

@@ -6,3 +6,8 @@ export type GeoTarget = {
   latitude: number;
   longitude: number;
 };
+
+/** A point plus how far around it to look, e.g. for nearby competitors. */
+export type GeoArea = GeoTarget & {
+  radiusKm: number;
+};

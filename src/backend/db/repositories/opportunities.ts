@@ -2,8 +2,9 @@ import "server-only";
 // Tenant-scoped repository for the ranked opportunities a scan produced.
 // The detail a single opportunity screen needs is computed during the scan and stored here as JSON,
 // so reading one is a lookup, never a recomputation.
+import type postgres from "postgres";
 import { z } from "zod";
-import { db } from "@/backend/db/client";
+import { getSql, isUuid } from "@/backend/db/client";
 import type {
   Difficulty,
   ImpactTier,
@@ -56,7 +57,26 @@ type DetailPayload = {
 
 export type SaveOpportunityInput = Omit<OpportunityDetail, "id">;
 
-type Row = ReturnType<typeof db.opportunities.filter>[number];
+type Row = {
+  id: string;
+  rank: number;
+  title: string;
+  note: string;
+  impact: string;
+  score: number;
+  estimated_bookings_low: number | null;
+  estimated_bookings_high: number | null;
+  estimated_revenue_low: number | null;
+  estimated_revenue_high: number | null;
+  keyword: string | null;
+  service_slug: string | null;
+  monthly_searches: number | null;
+  your_position: number | null;
+  top_competitor_position: number | null;
+  /** Detail payloads the scan produced, parsed on read. */
+  detail: unknown;
+  formula_version: string;
+};
 
 function toSummary(row: Row): Opportunity {
   return {
@@ -75,8 +95,8 @@ function toSummary(row: Row): Opportunity {
 }
 
 /** A stored detail that no longer parses is treated as absent rather than crashing the screen. */
-function parseDetail(json: string): DetailPayload {
-  const parsed = DetailSchema.safeParse(JSON.parse(json || "{}"));
+function parseDetail(detail: unknown): DetailPayload {
+  const parsed = DetailSchema.safeParse(detail ?? {});
   if (!parsed.success) return { difficulty: "medium", locationLabel: "", actions: [], competitors: [], contentPlan: [] };
   return parsed.data;
 }
@@ -93,7 +113,7 @@ function toDetail(row: Row): OpportunityDetail {
       row.estimated_revenue_low === null || row.estimated_revenue_high === null
         ? null
         : { low: row.estimated_revenue_low, high: row.estimated_revenue_high },
-    ...parseDetail(row.detail_json),
+    ...parseDetail(row.detail),
   };
 }
 
@@ -103,59 +123,72 @@ export async function replaceForScan(
   scanId: string,
   opportunities: readonly SaveOpportunityInput[],
 ): Promise<void> {
-  db.opportunities.remove((row) => row.organization_id === ctx.organizationId && row.scan_id === scanId);
-  const createdAt = new Date().toISOString();
-  for (const opportunity of opportunities) {
-    db.opportunities.insert({
-      id: `opp_${scanId}_${opportunity.rank}`,
-      organization_id: ctx.organizationId,
-      scan_id: scanId,
-      rank: opportunity.rank,
-      title: opportunity.title,
-      note: opportunity.note,
-      impact: opportunity.impact,
-      score: opportunity.score,
-      estimated_bookings_low: opportunity.estimatedMonthlyBookings?.low ?? null,
-      estimated_bookings_high: opportunity.estimatedMonthlyBookings?.high ?? null,
-      estimated_revenue_low: opportunity.estimatedMonthlyRevenue?.low ?? null,
-      estimated_revenue_high: opportunity.estimatedMonthlyRevenue?.high ?? null,
-      keyword: opportunity.keyword,
-      service_slug: opportunity.serviceSlug,
-      monthly_searches: opportunity.monthlySearches,
-      your_position: opportunity.yourPosition,
-      top_competitor_position: opportunity.topCompetitorPosition,
-      detail_json: JSON.stringify({
-        difficulty: opportunity.difficulty,
-        locationLabel: opportunity.locationLabel,
-        actions: opportunity.actions,
-        competitors: opportunity.competitors,
-        contentPlan: opportunity.contentPlan,
-      }),
-      formula_version: opportunity.version,
-      created_at: createdAt,
-    });
-  }
+  const sql = getSql();
+  const rows = opportunities.map((opportunity) => ({
+    organization_id: ctx.organizationId,
+    scan_id: scanId,
+    rank: opportunity.rank,
+    title: opportunity.title,
+    note: opportunity.note,
+    impact: opportunity.impact,
+    score: opportunity.score,
+    estimated_bookings_low: opportunity.estimatedMonthlyBookings?.low ?? null,
+    estimated_bookings_high: opportunity.estimatedMonthlyBookings?.high ?? null,
+    estimated_revenue_low: opportunity.estimatedMonthlyRevenue?.low ?? null,
+    estimated_revenue_high: opportunity.estimatedMonthlyRevenue?.high ?? null,
+    keyword: opportunity.keyword,
+    service_slug: opportunity.serviceSlug,
+    monthly_searches: opportunity.monthlySearches,
+    your_position: opportunity.yourPosition,
+    top_competitor_position: opportunity.topCompetitorPosition,
+    detail: sql.json({
+      difficulty: opportunity.difficulty,
+      locationLabel: opportunity.locationLabel,
+      actions: opportunity.actions,
+      competitors: opportunity.competitors,
+      contentPlan: opportunity.contentPlan,
+    } as unknown as postgres.JSONValue),
+    formula_version: opportunity.version,
+  }));
+  await sql.begin(async (tx) => {
+    await tx`delete from opportunities where scan_id = ${scanId} and organization_id = ${ctx.organizationId}`;
+    if (rows.length > 0) await tx`insert into opportunities ${tx(rows)}`;
+  });
 }
 
+const COLUMNS = "id, rank, title, note, impact, score, estimated_bookings_low, estimated_bookings_high, estimated_revenue_low, estimated_revenue_high, keyword, service_slug, monthly_searches, your_position, top_competitor_position, detail, formula_version";
+
 export async function listForScan(ctx: TenantContext, scanId: string, limit: number): Promise<Opportunity[]> {
-  return db.opportunities
-    .filter((row) => row.organization_id === ctx.organizationId && row.scan_id === scanId)
-    .sort((a, b) => a.rank - b.rank)
-    .slice(0, limit)
-    .map(toSummary);
+  if (!isUuid(scanId)) return [];
+  const sql = getSql();
+  const rows = await sql<Row[]>`
+    select ${sql.unsafe(COLUMNS)} from opportunities
+    where scan_id = ${scanId} and organization_id = ${ctx.organizationId}
+    order by rank
+    limit ${limit}
+  `;
+  return rows.map(toSummary);
 }
 
 export async function listDetailsForScan(ctx: TenantContext, scanId: string): Promise<OpportunityDetail[]> {
-  return db.opportunities
-    .filter((row) => row.organization_id === ctx.organizationId && row.scan_id === scanId)
-    .sort((a, b) => a.rank - b.rank)
-    .map(toDetail);
+  if (!isUuid(scanId)) return [];
+  const sql = getSql();
+  const rows = await sql<Row[]>`
+    select ${sql.unsafe(COLUMNS)} from opportunities
+    where scan_id = ${scanId} and organization_id = ${ctx.organizationId}
+    order by rank
+  `;
+  return rows.map(toDetail);
 }
 
 export async function findById(ctx: TenantContext, opportunityId: string): Promise<OpportunityDetail | null> {
-  const row = db.opportunities.findById(opportunityId);
-  if (!row || row.organization_id !== ctx.organizationId) return null;
-  return toDetail(row);
+  if (!isUuid(opportunityId)) return null;
+  const sql = getSql();
+  const [row] = await sql<Row[]>`
+    select ${sql.unsafe(COLUMNS)} from opportunities
+    where id = ${opportunityId} and organization_id = ${ctx.organizationId}
+  `;
+  return row ? toDetail(row) : null;
 }
 
 /** Ticking an action off is the one thing the screen writes back. */
@@ -165,12 +198,24 @@ export async function setActionDone(
   actionId: string,
   done: boolean,
 ): Promise<OpportunityDetail | null> {
-  const row = db.opportunities.findById(opportunityId);
-  if (!row || row.organization_id !== ctx.organizationId) return null;
+  if (!isUuid(opportunityId)) return null;
+  const sql = getSql();
+  // Read and write in one transaction, locking the row, so two quick ticks cannot overwrite each other.
+  const updated = await sql.begin(async (tx) => {
+    const [row] = await tx<{ detail: unknown }[]>`
+      select detail from opportunities
+      where id = ${opportunityId} and organization_id = ${ctx.organizationId}
+      for update
+    `;
+    if (!row) return false;
+    const detail = parseDetail(row.detail);
+    const actions = detail.actions.map((action) => (action.id === actionId ? { ...action, done } : action));
+    await tx`
+      update opportunities set detail = ${tx.json({ ...detail, actions } as unknown as postgres.JSONValue)}
+      where id = ${opportunityId} and organization_id = ${ctx.organizationId}
+    `;
+    return true;
+  });
 
-  const detail = parseDetail(row.detail_json);
-  const actions = detail.actions.map((action) => (action.id === actionId ? { ...action, done } : action));
-  db.opportunities.update(row.id, { detail_json: JSON.stringify({ ...detail, actions }) });
-
-  return findById(ctx, opportunityId);
+  return updated ? findById(ctx, opportunityId) : null;
 }

@@ -50,6 +50,12 @@ html {
   }
 }
 
+/* The chat belongs to the public pages only; chatbase-widget.tsx sets this class when the visitor leaves them. */
+.reynav-chat-hidden #chatbase-bubble-button,
+.reynav-chat-hidden #chatbase-bubble-window {
+  display: none !important;
+}
+
 /* After the chat is tucked away on scroll, the bubble pulses to show the conversation is still open. */
 .reynav-chat-minimised #chatbase-bubble-button {
   animation: reynav-chat-pulse 2s ease-out infinite;

@@ -3,11 +3,16 @@
 import {
   BarChart3,
   Bot,
+  CalendarDays,
+  CircleCheck,
   Gauge,
   ListOrdered,
   MapPinned,
+  Megaphone,
   MessageSquareHeart,
   PenLine,
+  Radar,
+  Rocket,
   Send,
   Sparkles,
   Star,
@@ -25,8 +30,11 @@ type CardOf<Id extends Card["id"]> = Extract<Card, { id: Id }>;
 const cardIcons: Record<Card["id"], LucideIcon> = {
   maps: MapPinned,
   "ai-search": Bot,
+  competitors: Radar,
   score: Gauge,
   opportunities: ListOrdered,
+  services: Megaphone,
+  plan: CalendarDays,
   content: PenLine,
   reviews: MessageSquareHeart,
   bookings: BarChart3,
@@ -129,6 +137,70 @@ function OpportunitiesVisual({ visual }: { visual: CardOf<"opportunities">["visu
   );
 }
 
+function CompetitorsVisual({ visual }: { visual: CardOf<"competitors">["visual"] }) {
+  return (
+    <div className={styles.rivals}>
+      <span className={styles.rivalsCaption}>{visual.caption}</span>
+      <ul className={styles.rivalList}>
+        {visual.rows.map((row, index) => (
+          <li
+            key={row.name}
+            className={styles.rival}
+            data-you={row.isYou}
+            style={{ "--delay": `${index * 0.15}s` } as CSSProperties}
+          >
+            <span className={styles.rivalName}>{row.name}</span>
+            <span className={styles.rivalRating}>
+              <Star aria-hidden size={12} fill="currentColor" />
+              {row.rating}
+            </span>
+            <span className={styles.rivalChange}>{row.change}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function ServicesVisual({ visual }: { visual: CardOf<"services">["visual"] }) {
+  return (
+    <div className={styles.gap}>
+      <span className={styles.gapBadge}>{visual.badge}</span>
+      <ul className={styles.gapSteps}>
+        {visual.steps.map((step, index) => (
+          <li key={step} style={{ "--delay": `${0.3 + index * 0.25}s` } as CSSProperties}>
+            <CircleCheck aria-hidden size={15} />
+            {step}
+          </li>
+        ))}
+      </ul>
+      <span className={styles.launch}>
+        <Rocket aria-hidden size={13} />
+        {visual.action}
+      </span>
+    </div>
+  );
+}
+
+function PlanVisual({ visual }: { visual: CardOf<"plan">["visual"] }) {
+  return (
+    <div className={styles.plan}>
+      <span className={styles.planHeading}>
+        <CalendarDays aria-hidden size={13} />
+        {visual.heading}
+      </span>
+      <ol className={styles.planDays}>
+        {visual.days.map((entry, index) => (
+          <li key={entry.day} style={{ "--delay": `${0.3 + index * 0.2}s` } as CSSProperties}>
+            <span className={styles.planDay}>{entry.day}</span>
+            {entry.task}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 function ContentVisual({ visual }: { visual: CardOf<"content">["visual"] }) {
   return (
     <div className={styles.composer}>
@@ -208,10 +280,16 @@ function CardVisual({ card }: { card: Card }): ReactNode {
       return <MapsVisual visual={card.visual} />;
     case "ai-search":
       return <AiSearchVisual visual={card.visual} />;
+    case "competitors":
+      return <CompetitorsVisual visual={card.visual} />;
     case "score":
       return <ScoreVisual visual={card.visual} />;
     case "opportunities":
       return <OpportunitiesVisual visual={card.visual} />;
+    case "services":
+      return <ServicesVisual visual={card.visual} />;
+    case "plan":
+      return <PlanVisual visual={card.visual} />;
     case "content":
       return <ContentVisual visual={card.visual} />;
     case "reviews":

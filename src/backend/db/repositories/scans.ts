@@ -1,19 +1,20 @@
 import "server-only";
 // Scans repository.
-import { db } from "@/backend/db/client";
-import { seedDemoTenant } from "@/backend/db/seed";
+import { getSql, isUuid } from "@/backend/db/client";
 import { activeLocationId } from "./locations";
 import type { Scan, ScanStatus } from "@/shared/types/scan";
 import type { TenantContext } from "@/shared/types/tenant";
 
-function toScan(row: {
+type ScanRow = {
   id: string;
   organization_id: string;
   location_id: string;
   status: string;
   started_at: string;
   finished_at: string | null;
-}): Scan {
+};
+
+function toScan(row: ScanRow): Scan {
   return {
     id: row.id,
     organizationId: row.organization_id,
@@ -25,16 +26,12 @@ function toScan(row: {
 }
 
 export async function create(ctx: TenantContext, locationId: string, startedAt: string): Promise<Scan> {
-  seedDemoTenant();
-  const row = db.scans.insert({
-    id: `scan_${Date.now().toString(36)}`,
-    organization_id: ctx.organizationId,
-    location_id: locationId,
-    status: "queued",
-    started_at: startedAt,
-    finished_at: null,
-  });
-  return toScan(row);
+  const [row] = await getSql()<ScanRow[]>`
+    insert into scans (organization_id, location_id, status, started_at)
+    values (${ctx.organizationId}, ${locationId}, 'queued', ${startedAt})
+    returning id, organization_id, location_id, status, started_at, finished_at
+  `;
+  return toScan(row!);
 }
 
 export async function setStatus(
@@ -43,29 +40,36 @@ export async function setStatus(
   status: ScanStatus,
   finishedAt: string | null,
 ): Promise<void> {
-  const row = db.scans.findById(scanId);
-  if (!row || row.organization_id !== ctx.organizationId) return;
-  db.scans.update(scanId, { status, finished_at: finishedAt });
+  if (!isUuid(scanId)) return;
+  await getSql()`
+    update scans set status = ${status}, finished_at = ${finishedAt}, updated_at = now()
+    where id = ${scanId} and organization_id = ${ctx.organizationId}
+  `;
 }
 
 /** Newest first, for the active location. */
 export async function listRecent(ctx: TenantContext, limit: number): Promise<Scan[]> {
   const locationId = await activeLocationId(ctx);
-  return db.scans
-    .filter((row) => row.organization_id === ctx.organizationId && row.location_id === locationId)
-    .sort((a, b) => b.started_at.localeCompare(a.started_at))
-    .slice(0, limit)
-    .map(toScan);
+  if (!locationId) return [];
+  const rows = await getSql()<ScanRow[]>`
+    select id, organization_id, location_id, status, started_at, finished_at
+    from scans where organization_id = ${ctx.organizationId} and location_id = ${locationId}
+    order by started_at desc, id desc
+    limit ${limit}
+  `;
+  return rows.map(toScan);
 }
 
 export async function findById(ctx: TenantContext, scanId: string): Promise<Scan | null> {
-  const row = db.scans.findById(scanId);
-  if (!row || row.organization_id !== ctx.organizationId) return null;
-  return toScan(row);
+  if (!isUuid(scanId)) return null;
+  const [row] = await getSql()<ScanRow[]>`
+    select id, organization_id, location_id, status, started_at, finished_at
+    from scans where id = ${scanId} and organization_id = ${ctx.organizationId}
+  `;
+  return row ? toScan(row) : null;
 }
 
 export async function findLatest(ctx: TenantContext): Promise<Scan | null> {
-  seedDemoTenant();
   const [latest] = await listRecent(ctx, 1);
   return latest ?? null;
 }

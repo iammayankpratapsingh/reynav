@@ -1,4 +1,4 @@
-// Product copy for the home (landing) screen; vertical words come from the pack's labels.
+// Product copy for the home (landing) screen; business words come from the neutral marketing labels.
 import type { VerticalLabels } from "@/shared/types/vertical";
 import { siteCopy } from "./site";
 
@@ -7,16 +7,16 @@ export function homeCopy(labels: VerticalLabels) {
   return {
     ...site,
     hero: {
-      eyebrow: `AI Marketing for ${labels.businessPlural}`,
+      eyebrow: `AI Growth for Local ${labels.businessPlural}`,
       headlineLines: ["More Visibility.", "More Bookings.", "More Revenue."],
-      tagline: `For ${labels.businessPlural}, By ${labels.business} Experts.`,
+      tagline: `For Local ${labels.businessPlural}, By Growth Experts.`,
       description: `Connect your website, Google Business Profile and booking system. REYNAV helps identify opportunities, create content and help you get more ${labels.bookingPlural.toLowerCase()}.`,
       primaryCta: { href: "/login", label: "Start Free Trial" },
       secondaryCta: { href: "#demo", label: "Watch Demo" },
       imageSlogan: ["Beautiful", "Business", "Growth"],
     },
     features: {
-      heading: "What REYNAV connects",
+      heading: "How REYNAV grows your business",
       items: [
         { id: "listing", label: "Google Business" },
         { id: "website", label: "Your Website" },
@@ -41,8 +41,21 @@ export function homeCopy(labels: VerticalLabels) {
           title: "AI search visibility",
           body: "Know what ChatGPT, Gemini and other AI assistants say when people ask for recommendations.",
           visual: {
-            question: `Who is the best ${labels.business.toLowerCase()} near me?`,
+            question: "Which local business near me has the best reviews?",
             answer: "Here are a few top-rated options nearby. Your business stands out for its reviews and easy online booking.",
+          },
+        },
+        {
+          id: "competitors",
+          title: "Competitor intelligence",
+          body: "Track nearby competitors' ratings, reviews, posts and rankings, and see exactly where they are beating you.",
+          visual: {
+            caption: "This month",
+            rows: [
+              { name: "Competitor A", rating: "4.7", change: "+17 reviews", isYou: false },
+              { name: "You", rating: "4.8", change: "+3 reviews", isYou: true },
+              { name: "Competitor B", rating: "4.5", change: "+8 Google posts", isYou: false },
+            ],
           },
         },
         {
@@ -56,6 +69,30 @@ export function homeCopy(labels: VerticalLabels) {
           title: "Opportunity finder",
           body: "REYNAV ranks what to do next by likely impact, so your time goes where it matters most.",
           visual: { items: ["Service page gap", "Review requests", "Booking button", "Google posts"] },
+        },
+        {
+          id: "services",
+          title: "Under-marketed services",
+          body: "Spot the services you offer but barely promote, and get the exact steps to get them found and booked.",
+          visual: {
+            badge: "High opportunity",
+            steps: ["Create a service page", "Add pricing and FAQs", "Request reviews", "Post on Google"],
+            action: "Launch campaign",
+          },
+        },
+        {
+          id: "plan",
+          title: "30-day growth plan",
+          body: "A day-by-day plan built from your top opportunities, so you always know the next task to do.",
+          visual: {
+            heading: "Week 1",
+            days: [
+              { day: "Mon", task: "Fix your top service page" },
+              { day: "Tue", task: "Upload 10 new photos" },
+              { day: "Wed", task: "Publish a Google post" },
+              { day: "Thu", task: `Ask 10 ${labels.customerPlural.toLowerCase()} for reviews` },
+            ],
+          },
         },
         {
           id: "content",

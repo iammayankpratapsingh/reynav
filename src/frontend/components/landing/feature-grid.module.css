@@ -113,11 +113,13 @@
 }
 
 .card[data-card="score"] .visual,
+.card[data-card="plan"] .visual,
 .card[data-card="bookings"] .visual {
   background: linear-gradient(160deg, #f0f8f4, #e6f3ec);
 }
 
 .card[data-card="opportunities"] .visual,
+.card[data-card="services"] .visual,
 .card[data-card="content"] .visual {
   background: linear-gradient(160deg, #fdf0f4, #fae5ec);
 }
@@ -517,6 +519,218 @@
   color: #ffffff;
 }
 
+/* Competitors visual */
+.rivals {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 18px;
+}
+
+.rivalsCaption {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.rivalList {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rival {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(17, 22, 36, 0.06);
+  font-size: 0.8rem;
+  color: var(--color-ink);
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(0.3s + var(--delay));
+}
+
+.grid[data-visible="true"] .rival {
+  opacity: 1;
+  transform: none;
+}
+
+.rival[data-you="true"] {
+  outline: 2px solid var(--color-brand);
+}
+
+.rivalName {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rivalRating {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 700;
+  color: #b7791f;
+}
+
+.rivalChange {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f3efe9;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+.rival[data-you="false"] .rivalChange {
+  background: #fdecea;
+  color: #b3261e;
+}
+
+/* Under-marketed services visual */
+.gap {
+  position: absolute;
+  inset: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(179, 36, 79, 0.1);
+}
+
+.gapBadge {
+  align-self: flex-start;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #fbe0ea;
+  color: #b3244f;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.gapSteps {
+  flex: 1;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gapSteps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.gapSteps svg {
+  flex: none;
+  color: #c9ccd4;
+  transition: color 0.4s ease var(--delay);
+}
+
+.grid[data-visible="true"] .gapSteps svg {
+  color: #2f8a5f;
+}
+
+.launch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-end;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--color-brand);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* 30-day plan visual */
+.plan {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 18px;
+}
+
+.planHeading {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #2f6e52;
+}
+
+.planDays {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.planDays li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 9px;
+  background: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s ease var(--delay), transform 0.45s ease var(--delay);
+}
+
+.grid[data-visible="true"] .planDays li {
+  opacity: 1;
+  transform: none;
+}
+
+.planDay {
+  flex: none;
+  width: 36px;
+  padding: 2px 0;
+  border-radius: 6px;
+  background: #e2f1e9;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: center;
+  color: #2f6e52;
+}
+
 /* Content visual */
 .composer {
   position: absolute;
@@ -772,7 +986,6 @@
   }
 
   .card[data-card="maps"],
-  .card[data-card="reviews"],
   .card[data-card="bookings"] {
     grid-column: span 2;
   }
@@ -788,10 +1001,6 @@
     gap: 22px;
   }
 
-  .card[data-card="reviews"] {
-    grid-column: span 1;
-  }
-
   .visual {
     height: 230px;
   }
@@ -804,6 +1013,8 @@
   .scoreParts li,
   .stackItem,
   .reply,
+  .rival,
+  .planDays li,
   .barSearch,
   .barBooking {
     opacity: 1;

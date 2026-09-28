@@ -1,19 +1,20 @@
 import "server-only";
 // Users repository. Our users table is the source of truth for identity, role and organisation membership.
-import { db } from "@/backend/db/client";
-import { seedDemoTenant } from "@/backend/db/seed";
+import { getSql, isUuid } from "@/backend/db/client";
 import type { Role } from "@/shared/constants/roles";
 import type { TenantContext } from "@/shared/types/tenant";
 import type { User } from "@/shared/types/user";
 
-function toUser(row: {
+type UserRow = {
   id: string;
   organization_id: string;
   auth_provider_id: string;
   email: string;
   display_name: string;
   role: string;
-}): User {
+};
+
+function toUser(row: UserRow): User {
   return {
     id: row.id,
     organizationId: row.organization_id,
@@ -29,43 +30,47 @@ function toUser(row: {
  * resolves. It matches on the auth provider's id only and is never used after a session exists.
  */
 export async function findByAuthProviderIdAcrossOrganizations(authProviderId: string): Promise<User | null> {
-  seedDemoTenant();
-  const row = db.users.find((user) => user.auth_provider_id === authProviderId);
+  const [row] = await getSql()<UserRow[]>`
+    select id, organization_id, auth_provider_id, email, display_name, role
+    from users where auth_provider_id = ${authProviderId}
+  `;
   return row ? toUser(row) : null;
 }
 
 export async function findById(ctx: TenantContext, userId: string): Promise<User | null> {
-  seedDemoTenant();
-  const row = db.users.findById(userId);
-  if (!row || row.organization_id !== ctx.organizationId) return null;
-  return toUser(row);
+  if (!isUuid(userId)) return null;
+  const [row] = await getSql()<UserRow[]>`
+    select id, organization_id, auth_provider_id, email, display_name, role
+    from users where id = ${userId} and organization_id = ${ctx.organizationId}
+  `;
+  return row ? toUser(row) : null;
 }
 
 export async function listForOrganization(ctx: TenantContext): Promise<User[]> {
-  seedDemoTenant();
-  return db.users.filter((user) => user.organization_id === ctx.organizationId).map(toUser);
+  const rows = await getSql()<UserRow[]>`
+    select id, organization_id, auth_provider_id, email, display_name, role
+    from users where organization_id = ${ctx.organizationId}
+    order by created_at, id
+  `;
+  return rows.map(toUser);
 }
 
 export async function create(
   ctx: TenantContext,
   input: { authProviderId: string; email: string; displayName: string; role: Role },
 ): Promise<User> {
-  seedDemoTenant();
-  const row = db.users.insert({
-    id: `usr_${Date.now().toString(36)}`,
-    organization_id: ctx.organizationId,
-    auth_provider_id: input.authProviderId,
-    email: input.email,
-    display_name: input.displayName,
-    role: input.role,
-    created_at: new Date().toISOString(),
-  });
-  return toUser(row);
+  const [row] = await getSql()<UserRow[]>`
+    insert into users (organization_id, auth_provider_id, email, display_name, role)
+    values (${ctx.organizationId}, ${input.authProviderId}, ${input.email}, ${input.displayName}, ${input.role})
+    returning id, organization_id, auth_provider_id, email, display_name, role
+  `;
+  return toUser(row!);
 }
 
 export async function updateDisplayName(ctx: TenantContext, userId: string, displayName: string): Promise<void> {
-  seedDemoTenant();
-  const row = db.users.findById(userId);
-  if (!row || row.organization_id !== ctx.organizationId) return;
-  db.users.update(userId, { display_name: displayName });
+  if (!isUuid(userId)) return;
+  await getSql()`
+    update users set display_name = ${displayName}, updated_at = now()
+    where id = ${userId} and organization_id = ${ctx.organizationId}
+  `;
 }

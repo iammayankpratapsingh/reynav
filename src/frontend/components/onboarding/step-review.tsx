@@ -102,6 +102,13 @@ function reviewRows(state: StepProps["state"], copy: StepProps["copy"]): ReviewR
       isMissing: !address,
       editStep: 2,
     },
+    {
+      id: "search-radius",
+      label: text.rows.searchRadius,
+      value: text.withinKm.replace("{km}", String(state.searchRadiusKm)),
+      isMissing: false,
+      editStep: 2,
+    },
     ...googleRows,
     {
       id: "bookings",

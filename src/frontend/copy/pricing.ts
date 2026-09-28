@@ -1,4 +1,4 @@
-// Product copy for the public pricing screen; vertical words come from the pack's labels.
+// Product copy for the public pricing screen; business words come from the neutral marketing labels.
 // Prices are placeholders until commercial terms are fixed.
 import type { VerticalLabels } from "@/shared/types/vertical";
 import { siteCopy } from "./site";

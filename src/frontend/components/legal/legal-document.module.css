@@ -1,0 +1,148 @@
+/* Styles for the Privacy Policy and Terms of Service pages. */
+.article {
+  padding: 56px 16px 88px;
+  background: linear-gradient(180deg, #fdf9f6 0%, #ffffff 320px);
+}
+
+.header {
+  max-width: 760px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.heading {
+  margin: 0 0 12px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2.1rem, 7vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.updated {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.intro {
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: clamp(1rem, 3.6vw, 1.12rem);
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.body {
+  display: grid;
+  gap: 32px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.contents {
+  align-self: start;
+  padding: 18px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-surface);
+}
+
+.contentsLabel {
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.contents ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.contents a {
+  color: var(--color-ink-soft);
+  text-decoration: none;
+}
+
+.contents a:hover {
+  color: var(--color-brand-strong);
+  text-decoration: underline;
+}
+
+.contents a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sections {
+  display: grid;
+  gap: 36px;
+  max-width: 68ch;
+}
+
+.section {
+  scroll-margin-top: calc(var(--header-height, 72px) + 16px);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.section p {
+  margin: 0 0 12px;
+}
+
+.section ul {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+
+.sectionHeading {
+  display: flex;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.number {
+  color: var(--color-brand);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 900px) {
+  .article {
+    padding: 80px 32px 112px;
+  }
+
+  .body {
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 56px;
+  }
+
+  .contents {
+    position: sticky;
+    top: calc(var(--header-height, 72px) + 24px);
+  }
+}
