@@ -3,6 +3,11 @@
 export function appShellCopy() {
   return {
     brand: "REYNAV",
+    simulation: {
+      title: "Demo mode.",
+      body: "All data shown here is simulated for demonstration. It is not real data about your business.",
+      dismiss: "Dismiss demo notice",
+    },
     nav: {
       label: "Sections",
       openMenu: "Open navigation",
